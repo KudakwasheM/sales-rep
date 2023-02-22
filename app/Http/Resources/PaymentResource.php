@@ -21,6 +21,7 @@ class PaymentResource extends JsonResource
             'amount' => $this->amount,
             'reference' => $this->reference,
             'client_id' => $this->client_id,
+            'plan_id' => $this->plan_id,
             'created_by' => $this->created_by
         ];
     }

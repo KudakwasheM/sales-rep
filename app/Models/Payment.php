@@ -14,6 +14,7 @@ class Payment extends Model
         'amount',
         'reference',
         'client_id',
+        'plan_id',
         'created_by'
     ];
 

@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePaymentRequest;
+use App\Http\Requests\StorePaymentRequest;
+use App\Http\Requests\UpdatePaymentRequest;
+use App\Http\Requests\UpdatePlanRequest;
+use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
+use App\Models\Plan;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -14,7 +20,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        return PaymentResource::collection(
+            Payment::query()->orderBy('created_at', 'desc')->paginate(10)
+        );
     }
 
     /**
@@ -23,9 +31,23 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePaymentRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        // $payment = Payment::create($data);
+
+        if ($data) {
+            $plan = Plan::find($data['plan_id']);
+
+            $plan->paid_installments += 1;
+            $plan->balance -= $data['amount'];
+
+            $payment = Payment::create($data);
+
+            $plan->save();
+            return response(compact('payment', 'plan'));
+        }
     }
 
     /**
@@ -36,7 +58,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        //
+        return new PaymentResource($payment);
     }
 
     /**
@@ -46,9 +68,25 @@ class PaymentController extends Controller
      * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment)
+    public function update(UpdatePaymentRequest $request, Payment $payment)
     {
-        //
+        $data = $request->validated();
+
+        if (isset($data['amount'])) {
+            $plan = Plan::find($data['plan_id']);
+
+            if ($data['amount'] < $payment['amount']) {
+                $plan['balance'] += ($data['amount'] - $payment['amount']);
+                $plan->save();
+            } elseif ($data['amount'] > $payment['amount']) {
+                $plan['balance'] -= ($data['amount'] - $payment['amount']);
+                $plan->save();
+            }
+        }
+
+        $payment->update($data);
+
+        return new PaymentResource($payment);
     }
 
     /**
@@ -59,6 +97,17 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        //
+        $plan = Plan::find($payment['plan_id']);
+
+        $plan->paid_installments -= 1;
+        $plan->balance += $payment['amount'];
+
+        $plan->save();
+
+        if ($plan->save()) {
+            $payment->delete();
+
+            return response('', 204);
+        }
     }
 }
