@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -22,12 +23,13 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
+    Route::apiResource('/users', UserController::class);
     Route::apiResource('/roles', RoleController::class);
+    Route::apiResource('/clients', ClientController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::apiResource('/users', UserController::class);
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);

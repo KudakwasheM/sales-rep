@@ -13,7 +13,7 @@ class StoreClientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,12 +26,11 @@ class StoreClientRequest extends FormRequest
         return [
             'name' => 'required|string|max:100',
             'id_number' => 'required|string|max:15',
-            'dob' => 'required',
-            'ec_number' => 'required',
-            'type' => 'required',
-            'battery_number' => 'required',
+            'dob' => 'required|date',
+            'ec_number' => 'string',
+            'type' => 'required|string',
+            'battery_number' => 'required|string',
             'docs' => 'required',
-            'created_by' => 'required',
         ];
     }
 }

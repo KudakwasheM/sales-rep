@@ -18,7 +18,7 @@ return new class extends Migration
             $table->double('amount');
             $table->string('battery_type');
             $table->integer('installments');
-            $table->integer('paid_installments');
+            $table->integer('paid_installments')->default(0);
             $table->double('deposit')->nullable();
             $table->double('balance');
             $table->unsignedBigInteger('client_id');

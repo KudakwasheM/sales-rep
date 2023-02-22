@@ -22,7 +22,7 @@ class AuthController extends Controller
 
         /** @var User $user */
         $user = Auth::user();
-        $role = DB::table('roles')->select('name')->get();
+        $role = DB::table('roles')->select('name')->where('id', $user->role_id)->get();
         $token = $user->createToken('main')->plainTextToken;
 
         return response(compact('user', 'role', 'token'));
