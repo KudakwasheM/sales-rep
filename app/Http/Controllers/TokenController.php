@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTokenRequest;
+use App\Http\Resources\TokenResource;
 use App\Models\Token;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,9 @@ class TokenController extends Controller
      */
     public function index()
     {
-        //
+        return TokenResource::collection(
+            Token::query()->orderBy('created_at', 'desc')->paginate(10)
+        );
     }
 
     /**
@@ -23,9 +27,13 @@ class TokenController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTokenRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $token = Token::create($data);
+
+        return response(new TokenResource($token), 201);
     }
 
     /**
@@ -36,7 +44,7 @@ class TokenController extends Controller
      */
     public function show(Token $token)
     {
-        //
+        return new TokenResource($token);
     }
 
     /**
@@ -48,7 +56,6 @@ class TokenController extends Controller
      */
     public function update(Request $request, Token $token)
     {
-        //
     }
 
     /**
@@ -59,6 +66,8 @@ class TokenController extends Controller
      */
     public function destroy(Token $token)
     {
-        //
+        $token->delete();
+
+        return response('', 204);
     }
 }

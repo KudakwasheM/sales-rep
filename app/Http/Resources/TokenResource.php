@@ -18,7 +18,9 @@ class TokenResource extends JsonResource
         return [
             'id' => $this->id,
             'number' => $this->number,
-            'client_id' => $this->client_id
+            'client_id' => $this->client_id,
+            // 'duration' => $this->duration,
+            // 'status' => $this->status
         ];
     }
 }

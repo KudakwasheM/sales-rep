@@ -24,7 +24,10 @@ class StoreTokenRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'number' => 'required|string|max:30',
+            'client_id' => 'required|numeric',
+            // 'duration' => 'required|numeric',
+            // 'status' => 'required|boolean'
         ];
     }
 }
