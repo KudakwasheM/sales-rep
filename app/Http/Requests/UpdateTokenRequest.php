@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePlanRequest extends FormRequest
+class UpdateTokenRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,10 @@ class UpdatePlanRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount' => 'required',
-            'battery_type' => 'required|string',
-            'installments' => 'required|numeric',
-            'paid_installments' => 'required|numeric',
-            'deposit' => 'required',
-            'balance' => 'required',
-            'client_id' => 'required'
+            'number' => 'required|string|max:30',
+            'client_id' => 'required|numeric',
+            // 'duration' => 'required|numeric',
+            // 'status' => 'required|boolean'
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePlanRequest;
+use App\Http\Resources\PlanResource;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 
@@ -36,7 +38,7 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
-        //
+        return new PlanResource($plan);
     }
 
     /**
@@ -46,9 +48,13 @@ class PlanController extends Controller
      * @param  \App\Models\Plan  $plan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Plan $plan)
+    public function update(UpdatePlanRequest $request, Plan $plan)
     {
-        //
+        $data = $request->validated();
+
+        $plan->update($data);
+
+        return new PlanResource($plan);
     }
 
     /**

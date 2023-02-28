@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\PlanResource;
@@ -31,76 +32,20 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(StoreClientRequest $request)
-    public function store(Request $request)
+    public function store(StoreClientRequest $request, StorePlanRequest $req)
     {
-        $request->validate([
-            'name' => 'required|string|max:100',
-            'id_number' => 'required|string|max:15',
-            'dob' => 'required|date',
-            'ec_number' => 'string',
-            'type' => 'required|string',
-            'battery_number' => 'required|string',
-            'docs' => 'required',
-        ]);
 
-        $client = new Client;
+        $data = $request->validated();
 
-        $client->name = $request['name'];
-        $client->id_number = $request['id_number'];
-        $client->dob = $request['dob'];
-        $client->ec_number = $request['ec_number'];
-        $client->type = $request['type'];
-        $client->battery_number = $request['battery_number'];
-        $docs = array();
-        if ($request->file('docs')) {
-            // $doc = $request->docs;
-            // $name = $doc->getClientOriginalName();
-            // $path = public_path("documents/$client->name/", $name);
+        $data['created_by'] = Auth::user()->username;
+        $client = Client::create($data);
 
-            // $doc->move($path, $name);
+        if ($client['id'] != null) {
+            $data1 = $req->validated();
 
-            // $client->docs = $path;
-            foreach ($request->file('docs') as $file) {
-                $name = $file->getClientOriginalName();
-                $ext = strtolower($file->getClientOriginalExtension());
-                $image_name = $name . '.' . $ext;
-                $upload_path = public_path("/files/$request->name/");
-                $url = $upload_path . $image_name;
-                $file->move($upload_path, $image_name);
-                $docs[] = $url;
-                dd($docs);
-            }
-            // $client->docs = json_encode($docs);
+            $data1['client_id'] = $client['id'];
         }
-        $client->docs = implode('|', $docs);
-        $client->created_by = Auth::user()->name;
-
-        $client->save();
-
-        if ($client->save()) {
-            $request->validate([
-                'amount' => 'required',
-                'battery_type' => 'required|string',
-                'installments' => 'required|numeric',
-                'paid_installments' => 'numeric',
-                'deposit' => 'required',
-                'balance' => 'required',
-                'client_id' => 'required'
-            ]);
-
-            $plan = new Plan();
-
-            $plan->amount = $request['amount'];
-            $plan->battery_type = $request['battery_type'];
-            $plan->installments = $request['installments'];
-            $plan->paid_installments = 0;
-            $plan->deposit = $request['deposit'];
-            $plan->balance = $request['amount'] - $request['deposit'];
-            $plan->client_id = $client->id;
-
-            $plan->save();
-        }
+        $plan = Plan::create($data1);
 
         return response(compact('client', 'plan'));
     }

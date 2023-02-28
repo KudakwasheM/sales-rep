@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTokenRequest;
+use App\Http\Requests\UpdateTokenRequest;
 use App\Http\Resources\TokenResource;
 use App\Models\Token;
 use Illuminate\Http\Request;
@@ -54,8 +55,13 @@ class TokenController extends Controller
      * @param  \App\Models\Token  $token
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Token $token)
+    public function update(UpdateTokenRequest $request, Token $token)
     {
+        $data = $request->validated();
+
+        $token->update($data);
+
+        return new TokenResource($token);
     }
 
     /**
