@@ -26,7 +26,7 @@ const DefaultLayout = () => {
         });
     }, []);
     return (
-        <div className="relative flex min-h-screen">
+        <div className="relative flex min-h-screen bg-gray-100">
             <aside class="bg-orange-400 shadow max-h-screen sticky top-0 text-white w-64 px-6">
                 <Link to="/dashboard">
                     <h1 class="text-4xl px-2 py-4">Sales</h1>
@@ -49,6 +49,12 @@ const DefaultLayout = () => {
                         className="flex items-center py-3 px-4 hover:bg-white hover:text-orange-400"
                     >
                         Payments
+                    </Link>
+                    <Link
+                        to="/users"
+                        className="flex items-center py-3 px-4 hover:bg-white hover:text-orange-400"
+                    >
+                        Users
                     </Link>
                     <Link
                         to="/payments"

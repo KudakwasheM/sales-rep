@@ -5,8 +5,9 @@ import Login from "./views/auth/Login";
 import Dashboard from "./views/dashboard/Dashboard";
 import NotFound from "./views/NotFound";
 import Clients from "./views/clients/Clients";
-// import UserForm from "./views/UserForm";
 import Users from "./views/users/Users";
+import UserForm from "./views/users/UserForm";
+import ClientForm from "./views/clients/ClientForm";
 
 const router = createBrowserRouter([
     {
@@ -17,8 +18,16 @@ const router = createBrowserRouter([
             { path: "/dashboard", element: <Dashboard /> },
             { path: "/clients", element: <Clients /> },
             { path: "/users", element: <Users /> },
-            // { path: "/users/create", element: <UserForm key="userCreate" /> },
-            // { path: "/users/:id", element: <UserForm key="userUpdate" /> },
+            { path: "/users/create", element: <UserForm key="userCreate" /> },
+            { path: "/users/:id", element: <UserForm key="userUpdate" /> },
+            {
+                path: "/clients/create",
+                element: <ClientForm key="clientCreate" />,
+            },
+            {
+                path: "/clients/:id",
+                element: <ClientForm key="clientUpdate" />,
+            },
         ],
     },
     {

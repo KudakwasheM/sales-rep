@@ -22,7 +22,7 @@ const Login = () => {
             .post("/login", payload)
             .then(({ data }) => {
                 setUser(data.user);
-                setToken(data.role);
+                setRole(data.role);
                 setToken(data.token);
             })
             .catch((err) => {
