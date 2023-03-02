@@ -51,6 +51,18 @@ const DefaultLayout = () => {
                         Payments
                     </Link>
                     <Link
+                        to="/plans"
+                        className="flex items-center py-3 px-4 hover:bg-white hover:text-orange-400"
+                    >
+                        Plans
+                    </Link>
+                    <Link
+                        to="/tokens"
+                        className="flex items-center py-3 px-4 hover:bg-white hover:text-orange-400"
+                    >
+                        Tokens
+                    </Link>
+                    <Link
                         to="/users"
                         className="flex items-center py-3 px-4 hover:bg-white hover:text-orange-400"
                     >

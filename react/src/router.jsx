@@ -8,6 +8,10 @@ import Clients from "./views/clients/Clients";
 import Users from "./views/users/Users";
 import UserForm from "./views/users/UserForm";
 import ClientForm from "./views/clients/ClientForm";
+import Payments from "./views/payments/Payments";
+import Plan from "./views/plans/Plan";
+import Reports from "./views/reports/Reports";
+import Tokens from "./views/tokens/Tokens";
 
 const router = createBrowserRouter([
     {
@@ -17,6 +21,10 @@ const router = createBrowserRouter([
             { path: "/", element: <Navigate to="/dashboard" /> },
             { path: "/dashboard", element: <Dashboard /> },
             { path: "/clients", element: <Clients /> },
+            { path: "/payments", element: <Payments /> },
+            { path: "/plans", element: <Plan /> },
+            { path: "/reports", element: <Reports /> },
+            { path: "/tokens", element: <Tokens /> },
             { path: "/users", element: <Users /> },
             { path: "/users/create", element: <UserForm key="userCreate" /> },
             { path: "/users/:id", element: <UserForm key="userUpdate" /> },

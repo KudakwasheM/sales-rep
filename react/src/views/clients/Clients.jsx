@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../../axios-client";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 const Clients = () => {
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(false);
+    const { setNotification } = useStateContext();
+
+    const onDelete = (client) => {
+        if (!window.confirm("Are you sure you want to delete this user?")) {
+            return;
+        }
+
+        axiosClient.delete(`/clients/${client.id}`).then(() => {
+            setNotification("Client deleted successfuly.");
+            getAllClients();
+        });
+    };
 
     const getAllClients = () => {
         setLoading(true);
