@@ -25,5 +25,15 @@ class DatabaseSeeder extends Seeder
             'role_id' => 1,
             'password' => bcrypt('Super313'),
         ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Admin User',
+            'username' => 'admin313',
+            'ec_number' => 'EC00002',
+            'email' => 'admin@sales.com',
+            'phone' => '+263123123124',
+            'role_id' => 2,
+            'password' => bcrypt('Admin313'),
+        ]);
     }
 }

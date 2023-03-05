@@ -20,7 +20,7 @@ class PaymentController extends Controller
     public function index()
     {
         return PaymentResource::collection(
-            Payment::query()->orderBy('created_at', 'desc')->paginate(10)
+            Payment::query()->orderBy('created_at', 'desc')->get()
         );
     }
 

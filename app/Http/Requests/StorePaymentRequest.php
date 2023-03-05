@@ -24,12 +24,12 @@ class StorePaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required',
-            'amount' => 'required',
-            'reference' => 'required',
-            'client_id' => 'required',
-            'plan_id' => 'required',
-            'created_by' => 'required'
+            'type' => 'required|string',
+            'amount' => 'required|numeric',
+            'reference' => 'required|string',
+            'client_id' => 'required|numeric',
+            'plan_id' => 'required|numeric',
+            'created_by' => 'required|numeric'
         ];
     }
 }

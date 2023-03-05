@@ -24,8 +24,8 @@ class UpdateTokenRequest extends FormRequest
     public function rules()
     {
         return [
-            'number' => 'required|string|max:30',
-            'client_id' => 'required|numeric',
+            'number' => 'string|max:30',
+            'client_id' => 'numeric',
             // 'duration' => 'required|numeric',
             // 'status' => 'required|boolean'
         ];

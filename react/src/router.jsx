@@ -12,6 +12,8 @@ import Payments from "./views/payments/Payments";
 import Plan from "./views/plans/Plan";
 import Reports from "./views/reports/Reports";
 import Tokens from "./views/tokens/Tokens";
+import User from "./views/users/User";
+import Client from "./views/clients/Client";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +30,7 @@ const router = createBrowserRouter([
             { path: "/users", element: <Users /> },
             { path: "/users/create", element: <UserForm key="userCreate" /> },
             { path: "/users/:id", element: <UserForm key="userUpdate" /> },
+            { path: "/users/show/:id", element: <User /> },
             {
                 path: "/clients/create",
                 element: <ClientForm key="clientCreate" />,
@@ -36,6 +39,7 @@ const router = createBrowserRouter([
                 path: "/clients/:id",
                 element: <ClientForm key="clientUpdate" />,
             },
+            { path: "/clients/show/:id", element: <Client /> },
         ],
     },
     {

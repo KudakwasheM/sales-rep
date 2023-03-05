@@ -95,7 +95,7 @@ const Clients = () => {
                                     </td>
                                     <td className="text-sm py-2">
                                         <Link
-                                            to={"/clients/" + client.id}
+                                            to={"/clients/show/" + client.id}
                                             className="bg-blue-300 p-1 text-white"
                                         >
                                             View

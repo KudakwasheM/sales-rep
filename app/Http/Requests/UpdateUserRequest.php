@@ -25,8 +25,12 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:55',
-            'email' => 'required|email|unique:users,email,' . $this->id,
+            'name' => 'string|max:55',
+            'username' => 'string',
+            'ec_number' => 'string',
+            'email' => 'email',
+            'phone' => 'string',
+            'role_id' => 'numeric',
             'password' => ['confirmed', Password::min(8)->letters()->symbols()],
         ];
     }

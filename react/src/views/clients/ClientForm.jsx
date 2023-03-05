@@ -11,19 +11,54 @@ const ClientForm = () => {
     const { setNotifiation } = useStateContext();
     const [client, setClient] = useState({
         id: null,
+        name: "",
         id_number: "",
-        dob: "",
         ec_number: "",
+        dob: null,
         type: "",
-        battery_number: null,
+        battery_number: "",
         docs: "",
         created_by: "",
     });
 
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        if (client.id) {
+            console.log(client);
+            axiosClient
+                .put(`/clients/${client.id}`, client)
+                .then((response) => {
+                    setNotification("Client successfully updated");
+                    navigate("/clients");
+                })
+                .catch((err) => {
+                    const response = err.response;
+                    if (response && response.status == 422) {
+                        setErrors(response.data.errors);
+                    }
+                });
+        } else {
+            axiosClient
+                .post("/clients", client)
+                .then(() => {
+                    console.log(first);
+                    setNotification("Client successfully created");
+                    navigate("/clients");
+                })
+                .catch((err) => {
+                    const response = err.response;
+                    if (response && response.status == 422) {
+                        setErrors(response.data.errors);
+                    }
+                });
+        }
+    };
+
     const getClient = () => {
         setLoading(true);
 
-        axiosClient.get(`/clients/${id}`).then(({ data }) => {
+        axiosClient.get(`/clients/${client.id}`).then(({ data }) => {
             console.log(data);
             setLoading(false);
             setClient(data);
@@ -59,13 +94,13 @@ const ClientForm = () => {
                         </div>
                     )}
                     {!loading && (
-                        <form className="flex flex-col">
+                        <form onSubmit={onSubmit} className="flex flex-col">
                             <label htmlFor="">Full Name</label>
                             <input
                                 className="py-2 px-2 mb-3 border border-gray-200"
                                 value={client.name}
                                 onChange={(e) =>
-                                    setclient({
+                                    setClient({
                                         ...client,
                                         name: e.target.value,
                                     })
@@ -77,80 +112,80 @@ const ClientForm = () => {
                                 className="py-2 px-2 mb-3 border border-gray-200"
                                 value={client.id_number}
                                 onChange={(e) =>
-                                    setclient({
+                                    setClient({
                                         ...client,
                                         id_number: e.target.value,
                                     })
                                 }
-                                placeholder="masyakudakwashe@gmail.com"
+                                placeholder="59-123123N89"
                             />
                             <label htmlFor="">EC Number</label>
                             <input
                                 className="py-2 px-2 mb-3 border border-gray-200"
                                 value={client.ec_number}
                                 onChange={(e) =>
-                                    setclient({
+                                    setClient({
                                         ...client,
                                         ec_number: e.target.value,
                                     })
                                 }
                                 placeholder="KUD007"
                             />
-                            <label htmlFor="">Type</label>
-                            <input
-                                className="py-2 px-2 mb-3 border border-gray-200"
-                                value={client.type}
-                                onChange={(e) =>
-                                    setclient({
-                                        ...client,
-                                        type: e.target.value,
-                                    })
-                                }
-                                placeholder="creator123"
-                            />
                             <label htmlFor="">D.O.B</label>
                             <input
                                 className="py-2 px-2 mb-3 border border-gray-200"
                                 value={client.dob}
                                 onChange={(e) =>
-                                    setclient({
+                                    setClient({
                                         ...client,
                                         dob: e.target.value,
                                     })
                                 }
-                                placeholder="creator123"
+                                type="date"
+                                placeholder="10/12/1996"
+                            />
+                            <label htmlFor="">Type</label>
+                            <input
+                                className="py-2 px-2 mb-3 border border-gray-200"
+                                value={client.type}
+                                onChange={(e) =>
+                                    setClient({
+                                        ...client,
+                                        type: e.target.value,
+                                    })
+                                }
+                                placeholder="SSB"
                             />
                             <label htmlFor="">Battery Number</label>
                             <input
                                 className="py-2 px-2 mb-3 border border-gray-200"
                                 value={client.battery_number}
                                 onChange={(e) =>
-                                    setclient({
+                                    setClient({
                                         ...client,
                                         battery_number: e.target.value,
                                     })
                                 }
-                                placeholder="+263719123456"
+                                placeholder="123456BN"
                             />
-                            {/* <label htmlFor="">Type</label>
-                            <select className="py-2 px-2 mb-3 border border-gray-200">
-                                <option value="" disabled>
-                                    --- Select Type ---
-                                </option>
-                                <option value="2">Admin</option>
-                                <option value="3">Administration</option>
-                                <option value="4">SalesRep</option>
-                            </select> */}
+                            <label htmlFor="">Documents</label>
+                            <input
+                                className="py-2 px-2 mb-3 border border-gray-200"
+                                value={client.docs}
+                                onChange={(e) =>
+                                    setClient({
+                                        ...client,
+                                        docs: e.target.value,
+                                    })
+                                }
+                                type="file"
+                                multiple
+                            />
 
-                            <div className="flex justify-between">
-                                <button className="py-3 bg-green-400 text-white w-1/2">
-                                    {!client.id && "CREATE"}
-                                    {client.id && "UPDATE"}
-                                </button>
-                                <button className="py-3 bg-red-400 text-white w-1/2">
-                                    CANCEL
-                                </button>
-                            </div>
+                            <button className="py-3 bg-green-400 text-white">
+                                {!client.id && "CREATE"}
+                                {client.id && "UPDATE"}
+                            </button>
                         </form>
                     )}
                 </div>

@@ -87,7 +87,7 @@ const Users = () => {
                                     <td className="py-2">{user.created_at}</td>
                                     <td className="text-sm py-2">
                                         <Link
-                                            to={"/users/" + user.id}
+                                            to={"/users/show/" + user.id}
                                             className="bg-blue-300 p-1 text-white"
                                         >
                                             View

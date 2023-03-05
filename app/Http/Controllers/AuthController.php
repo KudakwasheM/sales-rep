@@ -14,20 +14,20 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
 
-        // if (isset($credentials['username'])) {
-        //     $credentials['username'] = strtolower($credentials['username']);
+        if (isset($credentials['username'])) {
+            $credentials['username'] = strtolower($credentials['username']);
 
-        //     if (!Auth::attempt($credentials)) {
-        //         return response([
-        //             'message' => 'Provided credentials are incorrect'
-        //         ], 422);
-        //     }
-        // }
-        if (!Auth::attempt($credentials)) {
-            return response([
-                'message' => 'Provided credentials are incorrect'
-            ], 422);
+            if (!Auth::attempt($credentials)) {
+                return response([
+                    'message' => 'Provided credentials are incorrect'
+                ], 422);
+            }
         }
+        // if (!Auth::attempt($credentials)) {
+        //     return response([
+        //         'message' => 'Provided credentials are incorrect'
+        //     ], 422);
+        // }
 
         /** @var User $user */
         $user = Auth::user();

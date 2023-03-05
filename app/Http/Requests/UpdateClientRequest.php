@@ -24,14 +24,14 @@ class UpdateClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:100',
-            'id_number' => 'required|string|max:15',
-            'dob' => 'required|date',
+            'name' => 'string|max:100',
+            'id_number' => 'string|max:15',
+            'dob' => 'date',
             'ec_number' => 'string',
-            'type' => 'required|string',
-            'battery_number' => 'required|string',
-            'docs' => 'required',
-            'created_by' => 'required|string',
+            'type' => 'string',
+            'battery_number' => 'string',
+            'docs' => '',
+            'created_by' => 'string',
         ];
     }
 }

@@ -24,13 +24,13 @@ class UpdatePlanRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount' => 'required',
-            'battery_type' => 'required|string',
-            'installments' => 'required|numeric',
-            'paid_installments' => 'required|numeric',
-            'deposit' => 'required',
-            'balance' => 'required',
-            'client_id' => 'required'
+            'amount' => 'numeric',
+            'battery_type' => 'string',
+            'installments' => 'numeric',
+            'paid_installments' => 'numeric',
+            'deposit' => 'numeric',
+            'balance' => 'numeric',
+            'client_id' => 'numeric'
         ];
     }
 }

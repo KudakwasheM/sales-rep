@@ -27,8 +27,8 @@ class UpdatePaymentRequest extends FormRequest
             'type' => 'string',
             'amount' => 'numeric',
             'reference' => 'string',
-            'client_id' => '',
-            'plan_id' => '',
+            'client_id' => 'numeric',
+            'plan_id' => 'numeric',
             'created_by' => 'string'
         ];
     }

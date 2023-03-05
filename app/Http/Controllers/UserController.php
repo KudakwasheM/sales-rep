@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         return UserResource::collection(
-            User::query()->orderBy('id', 'desc')->paginate(10)
+            User::query()->orderBy('id', 'desc')->get()
         );
     }
 
@@ -33,9 +33,9 @@ class UserController extends Controller
         $data = $request->validated();
 
         $data['password'] = bcrypt($data['password']);
-        // if (isset($data['username'])) {
-        //     $data['username'] = strtolower($data['username']);
-        // }
+        if (isset($data['username'])) {
+            $data['username'] = strtolower($data['username']);
+        }
         $user = User::create($data);
 
         return response(new UserResource($user), 201);
@@ -59,7 +59,7 @@ class UserController extends Controller
      * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $data = $request->validated();
 

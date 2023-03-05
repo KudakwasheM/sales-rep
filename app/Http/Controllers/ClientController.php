@@ -11,6 +11,7 @@ use App\Models\Client;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -22,7 +23,7 @@ class ClientController extends Controller
     public function index()
     {
         return ClientResource::collection(
-            Client::query()->orderBy('created_at', 'desc')->paginate(10)
+            Client::query()->orderBy('created_at', 'desc')->get()
         );
     }
 
@@ -32,26 +33,21 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreClientRequest $request, StorePlanRequest $req)
+    // public function store(StoreClientRequest $request, StorePlanRequest $req)
+    public function store(StoreClientRequest $request)
     {
 
         $data = $request->validated();
 
         $data['created_by'] = Auth::user()->username;
+
+        if ($request->file('docs')) {
+            $data['docs'] = $request->file('docs')->store('clients', 'public');
+        }
+
         $client = Client::create($data);
 
-        if ($request->hasFile('docs')) {
-            // foreach()
-            $data['docs'] = $request->file('docs')->store('clients/' . $data['id'], 'public');
-        }
-        if ($client['id'] != null) {
-            $data1 = $req->validated();
-
-            $data1['client_id'] = $client['id'];
-        }
-        $plan = Plan::create($data1);
-
-        return response(compact('client', 'plan'));
+        return response(new ClientResource($client), 201);
     }
 
     /**
@@ -63,6 +59,16 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         return new ClientResource($client);
+    }
+
+    public function showClientPlan(Client $client)
+    {
+        $client = Client::find($client->id);
+        $cid = $client->id;
+        $clientPlan = DB::select("select * from plans where client_id = $cid");
+
+        $plan = Plan::find($clientPlan[0]->id);
+        return new PlanResource($plan);
     }
 
     /**

@@ -18,7 +18,7 @@ class TokenController extends Controller
     public function index()
     {
         return TokenResource::collection(
-            Token::query()->orderBy('created_at', 'desc')->paginate(10)
+            Token::query()->orderBy('created_at', 'desc')->get()
         );
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Http\Resources\PlanResource;
 use App\Models\Plan;
@@ -16,7 +17,9 @@ class PlanController extends Controller
      */
     public function index()
     {
-        //
+        return PlanResource::collection(
+            Plan::query()->orderBy('created_at', 'desc')->get()
+        );
     }
 
     /**
@@ -25,9 +28,13 @@ class PlanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePlanRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $plan = Plan::create($data);
+
+        return new PlanResource($plan);
     }
 
     /**

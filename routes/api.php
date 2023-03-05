@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -27,7 +28,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/roles', RoleController::class);
     Route::apiResource('/clients', ClientController::class);
+    Route::get('/clients/{client}/plan', [ClientController::class, 'showClientPlan']);
     Route::apiResource('/payments', PaymentController::class);
+    Route::apiResource('/plans', PlanController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
