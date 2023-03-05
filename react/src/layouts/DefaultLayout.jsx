@@ -99,7 +99,7 @@ const DefaultLayout = () => {
                 </main>
             </div>
             {notification && (
-                <div className="bg-green-200 text-white fixed right-4 top-4 z-50">
+                <div className="bg-green-500 text-white fixed right-4 bottom-4 z-50 py-5 px-3">
                     {notification}
                 </div>
             )}

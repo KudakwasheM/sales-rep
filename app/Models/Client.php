@@ -20,6 +20,9 @@ class Client extends Model
         'created_by'
     ];
 
+    protected $casts = [
+        'docs' => 'array'
+    ];
 
     function payments()
     {

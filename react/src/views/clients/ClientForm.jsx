@@ -8,7 +8,7 @@ const ClientForm = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState(null);
-    const { setNotifiation } = useStateContext();
+    const { setNotification } = useStateContext();
     const [client, setClient] = useState({
         id: null,
         name: "",
@@ -41,8 +41,8 @@ const ClientForm = () => {
         } else {
             axiosClient
                 .post("/clients", client)
-                .then(() => {
-                    console.log(first);
+                .then((response) => {
+                    console.log(client);
                     setNotification("Client successfully created");
                     navigate("/clients");
                 })
@@ -145,7 +145,7 @@ const ClientForm = () => {
                                 placeholder="10/12/1996"
                             />
                             <label htmlFor="">Type</label>
-                            <input
+                            <select
                                 className="py-2 px-2 mb-3 border border-gray-200"
                                 value={client.type}
                                 onChange={(e) =>
@@ -154,8 +154,14 @@ const ClientForm = () => {
                                         type: e.target.value,
                                     })
                                 }
-                                placeholder="SSB"
-                            />
+                                name="role_id"
+                            >
+                                <option value="">--- Select Type ---</option>
+                                <option value="vmum_usd">V-MUM - USD</option>
+                                <option value="vmum_rtgs">V-MUM - RTGS</option>
+                                <option value="ssb_usd">SSB - USD</option>
+                                <option value="ssb_rtgs">SSB - RTGS</option>
+                            </select>
                             <label htmlFor="">Battery Number</label>
                             <input
                                 className="py-2 px-2 mb-3 border border-gray-200"

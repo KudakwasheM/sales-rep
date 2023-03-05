@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('ec_number')->nullable();
             $table->string('type');
             $table->string('battery_number')->unique();
-            $table->string('docs');
+            $table->json('docs');
             $table->string('created_by');
             $table->timestamps();
         });

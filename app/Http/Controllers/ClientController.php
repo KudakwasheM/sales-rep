@@ -40,9 +40,13 @@ class ClientController extends Controller
         $data = $request->validated();
 
         $data['created_by'] = Auth::user()->username;
+        $docArray = [];
 
         if ($request->file('docs')) {
-            $data['docs'] = $request->file('docs')->store('clients', 'public');
+            foreach ($request->file('docs') as $file) {
+                $data['docs'] = $request->file('docs')->store('clients', 'public');
+            }
+            $docs[] = $data['docs'];
         }
 
         $client = Client::create($data);

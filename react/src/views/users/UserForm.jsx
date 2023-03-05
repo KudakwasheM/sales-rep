@@ -9,7 +9,7 @@ const UserForm = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState(null);
-    const { setNotifiation } = useStateContext();
+    const { setNotification } = useStateContext();
     const [user, setUser] = useState({
         id: null,
         name: "",

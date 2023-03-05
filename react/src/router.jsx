@@ -10,6 +10,8 @@ import UserForm from "./views/users/UserForm";
 import ClientForm from "./views/clients/ClientForm";
 import Payments from "./views/payments/Payments";
 import Plan from "./views/plans/Plan";
+import PlanForm from "./views/plans/PlanForm";
+import Plans from "./views/plans/Plans";
 import Reports from "./views/reports/Reports";
 import Tokens from "./views/tokens/Tokens";
 import User from "./views/users/User";
@@ -24,7 +26,7 @@ const router = createBrowserRouter([
             { path: "/dashboard", element: <Dashboard /> },
             { path: "/clients", element: <Clients /> },
             { path: "/payments", element: <Payments /> },
-            { path: "/plans", element: <Plan /> },
+            { path: "/plans", element: <Plans /> },
             { path: "/reports", element: <Reports /> },
             { path: "/tokens", element: <Tokens /> },
             { path: "/users", element: <Users /> },
@@ -40,6 +42,15 @@ const router = createBrowserRouter([
                 element: <ClientForm key="clientUpdate" />,
             },
             { path: "/clients/show/:id", element: <Client /> },
+            {
+                path: "/plans/create",
+                element: <PlanForm key="planCreate" />,
+            },
+            {
+                path: "/clients/:id",
+                element: <PlanForm key="planUpdate" />,
+            },
+            { path: "/plans/show/:id", element: <Plan /> },
         ],
     },
     {
