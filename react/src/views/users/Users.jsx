@@ -8,21 +8,21 @@ const Users = () => {
     const [loading, setLoading] = useState(false);
     const { setNotification } = useStateContext();
 
-    const onDelete = (user) => {
+    const onDelete = async (user) => {
         if (!window.confirm("Are you sure you want to delete this user?")) {
             return;
         }
 
-        axiosClient.delete(`/users/${user.id}`).then(() => {
+        await axiosClient.delete(`/users/${user.id}`).then(() => {
             setNotification("User deleted successfuly.");
             getAllUsers();
         });
     };
 
-    const getAllUsers = () => {
+    const getAllUsers = async () => {
         setLoading(true);
 
-        axiosClient.get("/users").then(({ data }) => {
+        await axiosClient.get("/users").then(({ data }) => {
             setLoading(false);
             setUsers(data.data);
         });

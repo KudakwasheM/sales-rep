@@ -56,14 +56,14 @@ const Client = () => {
                                         <th className="text-start w-1/2 py-3">
                                             ID Number
                                         </th>
-                                        <td className="w-1/2">
+                                        <td className="w-1/2 right-0">
                                             {client.id_number}
                                         </td>
                                     </tr>
                                     {client.ec_number && (
                                         <tr>
                                             <th className="text-start w-1/2 py-3">
-                                                E
+                                                EC Number
                                             </th>
                                             <td className="w-1/2">
                                                 {client.clientname}

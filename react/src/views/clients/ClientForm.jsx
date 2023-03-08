@@ -21,12 +21,11 @@ const ClientForm = () => {
         created_by: "",
     });
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-
         if (client.id) {
             console.log(client);
-            axiosClient
+            await axiosClient
                 .put(`/clients/${client.id}`, client)
                 .then((response) => {
                     setNotification("Client successfully updated");
@@ -39,7 +38,7 @@ const ClientForm = () => {
                     }
                 });
         } else {
-            axiosClient
+            await axiosClient
                 .post("/clients", client)
                 .then((response) => {
                     console.log(client);
@@ -55,10 +54,10 @@ const ClientForm = () => {
         }
     };
 
-    const getClient = () => {
+    const getClient = async () => {
         setLoading(true);
 
-        axiosClient.get(`/clients/${client.id}`).then(({ data }) => {
+        await axiosClient.get(`/clients/${id}`).then(({ data }) => {
             console.log(data);
             setLoading(false);
             setClient(data);
@@ -177,7 +176,6 @@ const ClientForm = () => {
                             <label htmlFor="">Documents</label>
                             <input
                                 className="py-2 px-2 mb-3 border border-gray-200"
-                                value={client.docs}
                                 onChange={(e) =>
                                     setClient({
                                         ...client,

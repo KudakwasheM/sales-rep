@@ -16,6 +16,10 @@ import Reports from "./views/reports/Reports";
 import Tokens from "./views/tokens/Tokens";
 import User from "./views/users/User";
 import Client from "./views/clients/Client";
+import PaymentForm from "./views/payments/PaymentForm";
+import Payment from "./views/payments/Payment";
+import TokenForm from "./views/tokens/TokenForm";
+import Token from "./views/tokens/Token";
 
 const router = createBrowserRouter([
     {
@@ -24,15 +28,9 @@ const router = createBrowserRouter([
         children: [
             { path: "/", element: <Navigate to="/dashboard" /> },
             { path: "/dashboard", element: <Dashboard /> },
+
+            // Client Routes
             { path: "/clients", element: <Clients /> },
-            { path: "/payments", element: <Payments /> },
-            { path: "/plans", element: <Plans /> },
-            { path: "/reports", element: <Reports /> },
-            { path: "/tokens", element: <Tokens /> },
-            { path: "/users", element: <Users /> },
-            { path: "/users/create", element: <UserForm key="userCreate" /> },
-            { path: "/users/:id", element: <UserForm key="userUpdate" /> },
-            { path: "/users/show/:id", element: <User /> },
             {
                 path: "/clients/create",
                 element: <ClientForm key="clientCreate" />,
@@ -42,6 +40,21 @@ const router = createBrowserRouter([
                 element: <ClientForm key="clientUpdate" />,
             },
             { path: "/clients/show/:id", element: <Client /> },
+
+            //Payment Routes
+            { path: "/payments", element: <Payments /> },
+            {
+                path: "/payments/create",
+                element: <PaymentForm key="paymentCreate" />,
+            },
+            {
+                path: "/payments/:id",
+                element: <PaymentForm key="paymentUpdate" />,
+            },
+            { path: "/payments/show/:id", element: <Payment /> },
+
+            //Plan Routes
+            { path: "/plans", element: <Plans /> },
             {
                 path: "/plans/create",
                 element: <PlanForm key="planCreate" />,
@@ -51,6 +64,24 @@ const router = createBrowserRouter([
                 element: <PlanForm key="planUpdate" />,
             },
             { path: "/plans/show/:id", element: <Plan /> },
+
+            //Reports Routes
+            { path: "/reports", element: <Reports /> },
+
+            //Token Routes
+            { path: "/tokens", element: <Tokens /> },
+            {
+                path: "/tokens/create",
+                element: <TokenForm key="tokenCreate" />,
+            },
+            { path: "/tokens/:id", element: <TokenForm key="tokenUpdate" /> },
+            { path: "/tokens/show/:id", element: <Token /> },
+
+            //User Routes
+            { path: "/users", element: <Users /> },
+            { path: "/users/create", element: <UserForm key="userCreate" /> },
+            { path: "/users/:id", element: <UserForm key="userUpdate" /> },
+            { path: "/users/show/:id", element: <User /> },
         ],
     },
     {

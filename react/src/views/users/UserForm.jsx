@@ -22,11 +22,11 @@ const UserForm = () => {
         password_confirmation: "",
     });
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         if (user.id) {
             console.log(user);
-            axiosClient
+            await axiosClient
                 .put(`/users/${user.id}`, user)
                 .then((response) => {
                     setNotification("User successfully updated");
@@ -39,9 +39,9 @@ const UserForm = () => {
                     }
                 });
         } else {
-            axiosClient
+            await axiosClient
                 .post("/users", user)
-                .then((res) => {
+                .then((response) => {
                     setNotification("User successfully created");
                     navigate("/users");
                 })
@@ -54,10 +54,10 @@ const UserForm = () => {
         }
     };
 
-    const getUser = () => {
+    const getUser = async () => {
         setLoading(true);
 
-        axiosClient.get(`/users/${id}`).then(({ data }) => {
+        await axiosClient.get(`/users/${id}`).then(({ data }) => {
             console.log(data);
             setLoading(false);
             setUser(data);

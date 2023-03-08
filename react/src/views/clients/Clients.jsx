@@ -8,22 +8,23 @@ const Clients = () => {
     const [loading, setLoading] = useState(false);
     const { setNotification } = useStateContext();
 
-    const onDelete = (client) => {
+    const onDelete = async (client) => {
         if (!window.confirm("Are you sure you want to delete this user?")) {
             return;
         }
 
-        axiosClient.delete(`/clients/${client.id}`).then(() => {
+        await axiosClient.delete(`/clients/${client.id}`).then(() => {
             setNotification("Client deleted successfuly.");
             getAllClients();
         });
     };
 
-    const getAllClients = () => {
+    const getAllClients = async () => {
         setLoading(true);
 
-        axiosClient.get("/clients").then(({ data }) => {
+        await axiosClient.get("/clients").then(({ data }) => {
             setLoading(false);
+            console.log(data.data);
             setClients(data.data);
         });
     };
@@ -33,7 +34,7 @@ const Clients = () => {
     }, []);
 
     return (
-        <div>
+        <>
             <div className="flex flex-row items-center justify-between mb-3">
                 <h2 className="font-lg text-2xl">Clients</h2>
                 <Link
@@ -121,7 +122,7 @@ const Clients = () => {
                     )}
                 </table>
             </div>
-        </div>
+        </>
     );
 };
 
