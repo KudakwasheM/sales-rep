@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\PlanResource;
 use App\Models\Client;
+use App\Models\ClientFile;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,16 +41,28 @@ class ClientController extends Controller
         $data = $request->validated();
 
         $data['created_by'] = Auth::user()->username;
-        $docArray = [];
-
-        if ($request->file('docs')) {
-            foreach ($request->file('docs') as $file) {
-                $data['docs'] = $request->file('docs')->store('clients', 'public');
-            }
-            $docs[] = $data['docs'];
-        }
 
         $client = Client::create($data);
+        // if ($request->file('docs')) {
+        //     foreach ($request->file('docs') as $file) {
+        //         $data['docs'] = $request->file('docs')->store('clients', 'public');
+        //     }
+        //     $docs[] = $data['docs'];
+        // }
+
+        if ($request->hasFile('docs')) {
+            $docs = $request->file('docs');
+
+            foreach ($docs as $doc) {
+                $fileName = time() . '_' . $doc->getClientOriginalName();
+                $request['file'] = $fileName;
+                $request['evidence_id'] = $client->id;
+
+                $doc->move(\public_path('/files/client/' . $client->id), $fileName);
+
+                ClientFile::create($request->all());
+            }
+        }
 
         return response(new ClientResource($client), 201);
     }
@@ -69,10 +82,21 @@ class ClientController extends Controller
     {
         $client = Client::find($client->id);
         $cid = $client->id;
-        $clientPlan = DB::select("select * from plans where client_id = $cid");
+        $clientPlan = Plan::where('client_id', $cid)->get();
 
         $plan = Plan::find($clientPlan[0]->id);
         return new PlanResource($plan);
+        // return response(compact('plan'));
+    }
+
+    public function getPlanByClient(Client $client)
+    {
+        $clientPlan = Plan::where('client_id', $client->id)->get();
+
+        $planId = $clientPlan->id;
+        $battery = $clientPlan->battery_type;
+
+        return response(compact('planId', 'battery'));
     }
 
     /**

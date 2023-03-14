@@ -30,8 +30,6 @@ class UpdateClientRequest extends FormRequest
             'ec_number' => 'string',
             'type' => 'string',
             'battery_number' => 'string',
-            'docs' => '',
-            'created_by' => 'string',
         ];
     }
 }

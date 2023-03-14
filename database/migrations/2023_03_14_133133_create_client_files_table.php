@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('client_files', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('id_number')->unique();
-            $table->date('dob');
-            $table->string('ec_number')->nullable();
-            $table->string('type');
-            $table->string('battery_number')->unique();
-            $table->string('created_by');
+            $table->string('file');
+            $table->unsignedBigInteger('client_id');
+            $table->foreign('client')->references('id')->on('clients')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('client_files');
     }
 };

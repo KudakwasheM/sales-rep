@@ -60,7 +60,7 @@ const router = createBrowserRouter([
                 element: <PlanForm key="planCreate" />,
             },
             {
-                path: "/clients/:id",
+                path: "/plans/:id",
                 element: <PlanForm key="planUpdate" />,
             },
             { path: "/plans/show/:id", element: <Plan /> },

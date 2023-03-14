@@ -30,7 +30,6 @@ class StoreClientRequest extends FormRequest
             'ec_number' => 'string',
             'type' => 'required|string',
             'battery_number' => 'required|string',
-            'docs' => 'required',
         ];
     }
 }

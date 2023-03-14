@@ -28,8 +28,7 @@ class StorePaymentRequest extends FormRequest
             'amount' => 'required|numeric',
             'reference' => 'required|string',
             'client_id' => 'required|numeric',
-            'plan_id' => 'required|numeric',
-            'created_by' => 'required|numeric'
+            'plan_id' => '',
         ];
     }
 }

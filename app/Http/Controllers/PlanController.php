@@ -32,6 +32,13 @@ class PlanController extends Controller
     {
         $data = $request->validated();
 
+        $data['installments'] = 0;
+        $data['paid_installments'] = 0;
+
+        if (isset($data['deposit'])) {
+            $data['balance'] = $data['amount'] - $data['deposit'];
+        }
+
         $plan = Plan::create($data);
 
         return new PlanResource($plan);

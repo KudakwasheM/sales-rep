@@ -16,13 +16,13 @@ class Client extends Model
         'ec_number',
         'type',
         'battery_number',
-        'docs',
         'created_by'
     ];
 
-    protected $casts = [
-        'docs' => 'array'
-    ];
+    public function clientFiles()
+    {
+        return $this->hasMany(ClientFile::class);
+    }
 
     function payments()
     {

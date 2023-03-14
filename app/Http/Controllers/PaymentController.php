@@ -9,6 +9,7 @@ use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
 use App\Models\Plan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -34,19 +35,22 @@ class PaymentController extends Controller
     {
         $data = $request->validated();
 
-        // $payment = Payment::create($data);
+        $data['created_by'] = Auth::user()->username;
 
         if ($data) {
             $plan = Plan::find($data['plan_id']);
 
             $plan->paid_installments += 1;
             $plan->balance -= $data['amount'];
-
+            if ($plan->balance < 0) {
+                $plan->balance = 0;
+            }
             $payment = Payment::create($data);
 
             $plan->save();
             return response(compact('payment', 'plan'));
         }
+        // return $data;
     }
 
     /**
@@ -79,6 +83,9 @@ class PaymentController extends Controller
                 $plan->save();
             } elseif ($data['amount'] > $payment['amount']) {
                 $plan['balance'] -= ($data['amount'] - $payment['amount']);
+                if ($plan->balance < 0) {
+                    $plan->balance = 0;
+                }
                 $plan->save();
             }
         }

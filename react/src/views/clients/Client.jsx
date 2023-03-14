@@ -21,8 +21,8 @@ const Client = () => {
         setLoading(true);
         axiosClient.get(`clients/${id}/plan`).then(({ data }) => {
             console.log(data);
-            // setLoading(false);
-            // setPlan(data);
+            setLoading(false);
+            setPlan(data);
         });
     };
 
@@ -44,7 +44,7 @@ const Client = () => {
                     )}
                     {!loading && (
                         <div className="flex flex-row w-full justify-around">
-                            <div className="client-details border border-1 w-5/12">
+                            <div className="border border-1 w-5/12">
                                 <table className="table-fixed">
                                     <tr>
                                         <th className="text-start w-1/2 py-3">
@@ -77,10 +77,10 @@ const Client = () => {
                                         <td className="w-1/2">{client.dob}</td>
                                     </tr>
                                     <tr>
-                                        <th className="text-start w-1/2 py-3">
+                                        <th className="text-start py-3">
                                             Type
                                         </th>
-                                        <td className="w-1/2">{client.type}</td>
+                                        <td className="">{client.type}</td>
                                     </tr>
                                     <tr>
                                         <th className="text-start w-1/2 py-3">
@@ -100,7 +100,7 @@ const Client = () => {
                                     </tr>
                                 </table>
                             </div>
-                            <div className="plan-details border border-1 w-5/12">
+                            <div className="border border-1 w-5/12">
                                 {!plan && (
                                     <div className="flex items-center justify-center">
                                         <Link
