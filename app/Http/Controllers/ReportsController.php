@@ -20,36 +20,12 @@ class ReportsController extends Controller
     public function users()
     {
         $usersCount = User::count();
-
-        return $usersCount;
-    }
-
-    public function clients()
-    {
         $clientsCount = Client::count();
-
-        return $clientsCount;
-    }
-
-    public function payments()
-    {
         $paymentsCount = Payment::count();
-
-        return $paymentsCount;
-    }
-
-    public function plans()
-    {
         $plansCount = Plan::count();
-
-        return $plansCount;
-    }
-
-    public function tokens()
-    {
         $tokensCount = Token::count();
 
-        return $tokensCount;
+        return response(compact('usersCount', 'clientsCount', 'paymentsCount', 'plansCount', 'tokensCount'));
     }
 
     public function lastWeekClients()

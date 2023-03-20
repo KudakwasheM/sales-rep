@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\StoreFileRequest;
 use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\PlanResource;
 use App\Models\Client;
 use App\Models\ClientFile;
+use App\Models\File;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,25 +45,24 @@ class ClientController extends Controller
         $data['created_by'] = Auth::user()->username;
 
         $client = Client::create($data);
-        // if ($request->file('docs')) {
-        //     foreach ($request->file('docs') as $file) {
-        //         $data['docs'] = $request->file('docs')->store('clients', 'public');
-        //     }
-        //     $docs[] = $data['docs'];
-        // }
 
-        if ($request->hasFile('docs')) {
-            $docs = $request->file('docs');
+        if ($request->hasFile('file')) {
+            $docs = $request->file('file');
 
             foreach ($docs as $doc) {
+                $file = new File();
                 $fileName = time() . '_' . $doc->getClientOriginalName();
-                $request['file'] = $fileName;
-                $request['evidence_id'] = $client->id;
+                $path = $doc->store('/files/clients/' . $client->id);
+                $file['name'] = $fileName;
+                $file['path'] = $path;
+                $file['client_id'] = $client->id;
 
-                $doc->move(\public_path('/files/client/' . $client->id), $fileName);
+                $doc->move(\public_path('/files/clients/' . $client->id), $fileName);
 
-                ClientFile::create($request->all());
+                $file->save();
+                // echo $path;
             }
+            // return $docs;
         }
 
         return response(new ClientResource($client), 201);

@@ -23,7 +23,8 @@ class PlanResource extends JsonResource
             'paid_installments' => $this->paid_installments,
             'deposit' => $this->deposit,
             'balance' => $this->balance,
-            'client_id' => $this->client_id
+            'client_id' => $this->client_id,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }
 }

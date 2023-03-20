@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PaymentResource extends JsonResource
+class FileResource extends JsonResource
 {
     public static $wrap = false;
     /**
@@ -17,13 +17,8 @@ class PaymentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => $this->type,
-            'amount' => $this->amount,
-            'reference' => $this->reference,
-            'client_id' => $this->client_id,
-            'plan_id' => $this->plan_id,
-            'created_by' => $this->created_by,
-            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'name' => $this->name,
+            'path' => $this->path
         ];
     }
 }

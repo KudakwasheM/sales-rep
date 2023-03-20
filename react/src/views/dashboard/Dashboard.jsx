@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axiosClient from "../../axios-client";
+import BarChart from "../../components/BarChart";
 
 const Dashboard = () => {
+    const [counts, setCounts] = useState([]);
+    const [sales, setSales] = useState({
+        label: null,
+        datasets: [],
+    });
+
+    const getCounts = async () => {
+        await axiosClient.get("/counts/users").then(({ data }) => {
+            console.log(data);
+            setCounts(data);
+        });
+    };
+
+    useEffect(() => {
+        getCounts();
+    }, []);
+
     return (
         <div class="w-full px-6 py-6 mx-auto">
             {/* <!-- row 1 --> */}
-            <div class="flex flex-wrap -mx-3">
+            <div class="flex flex-wrap -mx-3 mb-3">
                 {/* <!-- card1 --> */}
                 <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
                     <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
@@ -12,19 +31,17 @@ const Dashboard = () => {
                             <div class="flex flex-row -mx-3">
                                 <div class="flex-none w-2/3 max-w-full px-3">
                                     <div>
-                                        <p class="mb-0 leading-normal text-sm">
-                                            Today's Money
+                                        <p class="mb-0 font-sans font-semibold leading-normal text-sm">
+                                            Payments
                                         </p>
                                         <h5 class="mb-0 font-bold">
-                                            $53,000
-                                            <span class="leading-normal text-sm font-weight-bolder text-lime-500">
-                                                +55%
-                                            </span>
+                                            {counts.paymentsCount}
                                         </h5>
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
+                                    {/* <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500"> */}
+                                    <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-orange-300 to-orange-500">
                                         <i class="ni leading-none ni-money-coins text-lg relative top-3.5 text-white"></i>
                                     </div>
                                 </div>
@@ -41,18 +58,16 @@ const Dashboard = () => {
                                 <div class="flex-none w-2/3 max-w-full px-3">
                                     <div>
                                         <p class="mb-0 font-sans font-semibold leading-normal text-sm">
-                                            Today's Users
+                                            Users
                                         </p>
                                         <h5 class="mb-0 font-bold">
-                                            2,300
-                                            <span class="leading-normal text-sm font-weight-bolder text-lime-500">
-                                                +3%
-                                            </span>
+                                            {counts.usersCount}
                                         </h5>
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
+                                    {/* <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500"> */}
+                                    <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-orange-300 to-orange-500">
                                         <i class="ni leading-none ni-world text-lg relative top-3.5 text-white"></i>
                                     </div>
                                 </div>
@@ -69,18 +84,16 @@ const Dashboard = () => {
                                 <div class="flex-none w-2/3 max-w-full px-3">
                                     <div>
                                         <p class="mb-0 font-sans font-semibold leading-normal text-sm">
-                                            New Clients
+                                            Clients
                                         </p>
                                         <h5 class="mb-0 font-bold">
-                                            +3,462
-                                            <span class="leading-normal text-red-600 text-sm font-weight-bolder">
-                                                -2%
-                                            </span>
+                                            {counts.clientsCount}
                                         </h5>
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
+                                    {/* <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500"> */}
+                                    <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-orange-300 to-orange-500">
                                         <i class="ni leading-none ni-paper-diploma text-lg relative top-3.5 text-white"></i>
                                     </div>
                                 </div>
@@ -97,18 +110,16 @@ const Dashboard = () => {
                                 <div class="flex-none w-2/3 max-w-full px-3">
                                     <div>
                                         <p class="mb-0 font-sans font-semibold leading-normal text-sm">
-                                            Sales
+                                            Tokens Issued
                                         </p>
                                         <h5 class="mb-0 font-bold">
-                                            $103,430
-                                            <span class="leading-normal text-sm font-weight-bolder text-lime-500">
-                                                +5%
-                                            </span>
+                                            {counts.tokensCount}
                                         </h5>
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
+                                    {/* <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500"> */}
+                                    <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-orange-300 to-orange-500">
                                         <i class="ni leading-none ni-cart text-lg relative top-3.5 text-white"></i>
                                     </div>
                                 </div>
@@ -116,6 +127,13 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="flex flex-wrap">
+                {/* <BarChart chartData={} /> */}
+                {/* <BarChart chartData={} /> */}
+                {/* <BarChart chartData={} /> */}
+                {/* <BarChart chartData={} /> */}
+                {/* <BarChart chartData={} /> */}
             </div>
         </div>
     );

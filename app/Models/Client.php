@@ -19,9 +19,9 @@ class Client extends Model
         'created_by'
     ];
 
-    public function clientFiles()
+    public function files()
     {
-        return $this->hasMany(ClientFile::class);
+        return $this->hasMany(File::class);
     }
 
     function payments()
