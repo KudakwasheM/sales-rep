@@ -81,13 +81,9 @@ class ClientController extends Controller
 
     public function showClientPlan(Client $client)
     {
-        $client = Client::find($client->id);
-        $cid = $client->id;
-        $clientPlan = Plan::where('client_id', $cid)->get();
+        $client = Client::with('plans')->find($client->id);
 
-        $plan = Plan::find($clientPlan[0]->id);
-        return new PlanResource($plan);
-        // return response(compact('plan'));
+        return response(compact('client'));
     }
 
     public function getPlanByClient(Client $client)

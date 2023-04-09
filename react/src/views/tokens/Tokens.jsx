@@ -52,7 +52,7 @@ const Tokens = () => {
                 </Link>
             </div>
             <div className="shadow-md p-3 bg-white">
-                <table class="table-auto w-full">
+                <table className="table-auto w-full">
                     <thead className="border border-solid border-l-0 border-r-0">
                         <tr className="bg-[#F8F8F8]">
                             <th className="py-3 text-lg font-normal text-start">
@@ -84,7 +84,9 @@ const Tokens = () => {
                                 <tr key={token.id}>
                                     <td className="py-2">{token.id}</td>
                                     <td className="py-2">{token.number}</td>
-                                    <td className="py-2">{token.client_id}</td>
+                                    <td className="py-2">
+                                        {token.client.name}
+                                    </td>
                                     <td className="text-sm py-2">
                                         <Link
                                             to={"/tokens/show/" + token.id}

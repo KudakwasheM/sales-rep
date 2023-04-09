@@ -26,11 +26,11 @@ class StorePlanRequest extends FormRequest
         return [
             'amount' => 'required',
             'battery_type' => 'required|string',
-            'installments' => '',
+            'installments' => 'required|numeric',
             'paid_installments' => '',
             'deposit' => 'required|numeric',
             'balance' => '',
-            'client_id' => 'numeric'
+            'client_id' => 'numeric',
         ];
     }
 }

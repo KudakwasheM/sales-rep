@@ -25,16 +25,7 @@ const Payments = () => {
 
         await axiosClient.get("/payments").then(({ data }) => {
             setLoading(false);
-            setPayments(data.data);
-        });
-    };
-
-    const getClient = async (id) => {
-        setLoading(true);
-
-        await axiosClient.get(`/payments/${id}`).then(({ data }) => {
-            setLoading(false);
-            console.log(data);
+            setPayments(data.payments);
         });
     };
 
@@ -53,14 +44,14 @@ const Payments = () => {
                 </Link>
             </div>
             <div className="shadow-md p-3 bg-white">
-                <table class="table-auto w-full">
+                <table className="table-auto w-full">
                     <thead className="border border-solid border-l-0 border-r-0">
                         <tr className="bg-[#F8F8F8]">
                             <th className="py-3 text-lg font-normal text-start">
-                                Type
+                                Amount
                             </th>
                             <th className="py-3 text-lg font-normal text-start">
-                                Amount
+                                Type
                             </th>
                             <th className="py-3 text-lg font-normal text-start">
                                 Reference
@@ -70,6 +61,9 @@ const Payments = () => {
                             </th>
                             <th className="py-3 text-lg font-normal text-start">
                                 Processed By
+                            </th>
+                            <th className="py-3 text-lg font-normal text-start">
+                                Actions
                             </th>
                         </tr>
                     </thead>
@@ -86,13 +80,19 @@ const Payments = () => {
                         <tbody>
                             {payments.map((payment) => (
                                 <tr key={payment.id}>
-                                    <td className="py-2">{payment.type}</td>
                                     <td className="py-2">{payment.amount}</td>
+                                    <td className="py-2">
+                                        {payment.type == "cash_usd" &&
+                                            "Cash USD"}
+                                        {payment.type == "cash_rtgs" &&
+                                            "Cash RTGS"}
+                                        {payment.type == "ecocash" && "ECOCASH"}
+                                    </td>
                                     <td className="py-2">
                                         {payment.reference}
                                     </td>
                                     <td className="py-2">
-                                        {payment.client_id}
+                                        {payment.client.name}
                                     </td>
 
                                     <td className="py-2">

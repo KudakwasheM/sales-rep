@@ -17,9 +17,9 @@ class PlanController extends Controller
      */
     public function index()
     {
-        return PlanResource::collection(
-            Plan::query()->orderBy('created_at', 'desc')->get()
-        );
+        $data = Plan::with('client')->orderBy('id', 'desc')->get();
+
+        return response(compact('data'));
     }
 
     /**
@@ -32,7 +32,7 @@ class PlanController extends Controller
     {
         $data = $request->validated();
 
-        $data['installments'] = 0;
+        // $data['installments'] = 0;
         $data['paid_installments'] = 0;
 
         if (isset($data['deposit'])) {

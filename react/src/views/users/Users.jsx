@@ -44,7 +44,7 @@ const Users = () => {
                 </Link>
             </div>
             <div className="shadow-md p-3 bg-white">
-                <table class="table-auto w-full">
+                <table className="table-auto w-full">
                     <thead className="border border-solid border-l-0 border-r-0">
                         <tr className="bg-[#F8F8F8]">
                             <th className="py-3 text-lg font-normal text-start">

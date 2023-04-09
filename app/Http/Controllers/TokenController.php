@@ -17,9 +17,9 @@ class TokenController extends Controller
      */
     public function index()
     {
-        return TokenResource::collection(
-            Token::query()->orderBy('created_at', 'desc')->get()
-        );
+        $data = Token::with('client')->orderBy('id', 'desc')->get();
+
+        return response(compact('data'));
     }
 
     /**

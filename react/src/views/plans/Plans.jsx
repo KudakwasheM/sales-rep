@@ -28,15 +28,6 @@ const Plans = () => {
         });
     };
 
-    const getClient = async (id) => {
-        setLoading(true);
-
-        await axiosClient.get(`/plans/${id}`).then(({ data }) => {
-            setLoading(false);
-            console.log(data);
-        });
-    };
-
     useEffect(() => {
         getPlans();
     }, []);
@@ -52,7 +43,7 @@ const Plans = () => {
                 </Link>
             </div>
             <div className="shadow-md p-3 bg-white">
-                <table class="table-auto w-full">
+                <table className="table-auto w-full">
                     <thead className="border border-solid border-l-0 border-r-0">
                         <tr className="bg-[#F8F8F8]">
                             <th className="py-3 text-lg font-normal text-start">
@@ -96,7 +87,10 @@ const Plans = () => {
                                 <tr key={plan.id}>
                                     <td className="py-2">{plan.amount}</td>
                                     <td className="py-2">
-                                        {plan.battery_type}
+                                        {plan.battery_type == "d_100_usd" &&
+                                            "D 100 USD"}
+                                        {plan.battery_type == "d_100_rtgs" &&
+                                            "D 100 RTGS"}
                                     </td>
                                     <td className="py-2">
                                         {plan.installments}
@@ -107,7 +101,7 @@ const Plans = () => {
 
                                     <td className="py-2">{plan.deposit}</td>
                                     <td className="py-2">{plan.balance}</td>
-                                    <td className="py-2">{plan.client_id}</td>
+                                    <td className="py-2">{plan.client.name}</td>
                                     <td className="text-sm py-2">
                                         <Link
                                             to={"/plans/show/" + plan.id}

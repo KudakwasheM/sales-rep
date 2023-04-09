@@ -38,35 +38,19 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Counts 
     Route::get('/now', [ReportsController::class, 'now']);
-    Route::get('/counts/users', [ReportsController::class, 'users']);
+    Route::get('/counts', [ReportsController::class, 'allCounts']);
+    Route::get('/counts/week/counts', [ReportsController::class, 'lastWeekCounts']);
+    Route::get('/counts/current/week/counts', [ReportsController::class, 'currentWeekCounts']);
+    Route::get('/counts/{username}', [ReportsController::class, 'userWeekCounts']);
+    Route::get('/counts/month/counts', [ReportsController::class, 'lastMonthCounts']);
+    Route::get('/counts/current/month/counts', [ReportsController::class, 'currentMonthCounts']);
 
-    Route::get('/counts/clients', [ReportsController::class, 'clients']);
-    Route::get('/counts/week/clients', [ReportsController::class, 'lastWeekClients']);
-    Route::get('/counts/current/week/clients', [ReportsController::class, 'currentWeekClients']);
-    Route::get('/counts/week/clients/{username}', [ReportsController::class, 'userWeekClients']);
-    Route::get('/counts/month/clients', [ReportsController::class, 'lastMonthClients']);
-    Route::get('/counts/current/month/clients', [ReportsController::class, 'currentMonthClients']);
-
-    Route::get('/counts/payments', [ReportsController::class, 'payments']);
-    Route::get('/counts/week/payments', [ReportsController::class, 'lastWeekPayments']);
-    Route::get('/counts/current/week/payments', [ReportsController::class, 'currentWeekPayments']);
-    Route::get('/counts/month/payments', [ReportsController::class, 'lastMonthPayments']);
-    Route::get('/counts/current/month/payments', [ReportsController::class, 'currentMonthPayments']);
-
-    Route::get('/counts/plans', [ReportsController::class, 'plans']);
-    Route::get('/counts/week/plans', [ReportsController::class, 'lastWeekPlans']);
-    Route::get('/counts/current/week/plans', [ReportsController::class, 'currentWeekPlans']);
-    Route::get('/counts/month/plans', [ReportsController::class, 'lastMonthPlans']);
-    Route::get('/counts/current/month/plans', [ReportsController::class, 'currentMonthPlans']);
-
-    Route::get('/counts/tokens', [ReportsController::class, 'tokens']);
-    Route::get('/counts/week/tokens', [ReportsController::class, 'lastWeekTokens']);
-    Route::get('/counts/current/week/tokens', [ReportsController::class, 'currentWeekTokens']);
-    Route::get('/counts/month/tokens', [ReportsController::class, 'lastMonthTokens']);
-    Route::get('/counts/current/month/tokens', [ReportsController::class, 'currentMonthTokens']);
+    Route::get('/startof', [ReportsController::class, 'weekly']);
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 });
+// Route::apiResource('/clients', ClientController::class);
 
 Route::post('/login', [AuthController::class, 'login']);
+// Route::apiResource('/payments', PaymentController::class);

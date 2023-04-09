@@ -25,7 +25,6 @@ const UserForm = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         if (user.id) {
-            console.log(user);
             await axiosClient
                 .put(`/users/${user.id}`, user)
                 .then((response) => {
@@ -39,6 +38,7 @@ const UserForm = () => {
                     }
                 });
         } else {
+            console.log(user);
             await axiosClient
                 .post("/users", user)
                 .then((response) => {
@@ -58,7 +58,6 @@ const UserForm = () => {
         setLoading(true);
 
         await axiosClient.get(`/users/${id}`).then(({ data }) => {
-            console.log(data);
             setLoading(false);
             setUser(data);
         });

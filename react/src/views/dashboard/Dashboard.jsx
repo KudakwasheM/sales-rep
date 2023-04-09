@@ -10,7 +10,7 @@ const Dashboard = () => {
     });
 
     const getCounts = async () => {
-        await axiosClient.get("/counts/users").then(({ data }) => {
+        await axiosClient.get("/counts").then(({ data }) => {
             console.log(data);
             setCounts(data);
         });
@@ -32,10 +32,10 @@ const Dashboard = () => {
                                 <div class="flex-none w-2/3 max-w-full px-3">
                                     <div>
                                         <p class="mb-0 font-sans font-semibold leading-normal text-sm">
-                                            Payments
+                                            Total Revenue
                                         </p>
                                         <h5 class="mb-0 font-bold">
-                                            {counts.paymentsCount}
+                                            $ {counts.revenue}
                                         </h5>
                                     </div>
                                 </div>

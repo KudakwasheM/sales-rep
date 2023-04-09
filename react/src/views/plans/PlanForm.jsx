@@ -124,9 +124,8 @@ const PlanForm = () => {
                                 placeholder="300"
                             />
                             <label htmlFor="">Battery Type</label>
-                            <input
+                            <select
                                 className="py-2 px-2 mb-3 border border-gray-200"
-                                type="text"
                                 value={plan.battery_type}
                                 onChange={(e) =>
                                     setPlan({
@@ -134,7 +133,26 @@ const PlanForm = () => {
                                         battery_type: e.target.value,
                                     })
                                 }
-                                placeholder="D100 USD"
+                                name="battery_type"
+                            >
+                                <option value="">
+                                    --- Select Battery Type ---
+                                </option>
+                                <option value="d_100_usd">D 100 USD</option>
+                                <option value="d_100_usd">D 100 RTGS</option>
+                            </select>
+                            <label htmlFor="">Installments</label>
+                            <input
+                                className="py-2 px-2 mb-3 border border-gray-200"
+                                type="text"
+                                value={plan.installments}
+                                onChange={(e) =>
+                                    setPlan({
+                                        ...plan,
+                                        installments: e.target.value,
+                                    })
+                                }
+                                placeholder="12"
                             />
                             <label htmlFor="">Deposit</label>
                             <input

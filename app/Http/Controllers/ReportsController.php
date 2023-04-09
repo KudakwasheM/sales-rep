@@ -12,12 +12,12 @@ use Illuminate\Http\Request;
 
 class ReportsController extends Controller
 {
-    public function now()
-    {
-        return Carbon::now()->startOfWeek();
-    }
+    // public function now()
+    // {
+    //     return Carbon::now()->startOfWeek();
+    // }
 
-    public function users()
+    public function allCounts()
     {
         $usersCount = User::count();
         $clientsCount = Client::count();
@@ -25,10 +25,14 @@ class ReportsController extends Controller
         $plansCount = Plan::count();
         $tokensCount = Token::count();
 
-        return response(compact('usersCount', 'clientsCount', 'paymentsCount', 'plansCount', 'tokensCount'));
+        $deposits = Plan::sum('deposit');
+        $payments = Payment::sum('amount');
+        $revenue = $deposits + $payments;
+
+        return response(compact('usersCount', 'clientsCount', 'paymentsCount', 'plansCount', 'tokensCount', 'deposits', 'payments', 'revenue'));
     }
 
-    public function lastWeekClients()
+    public function lastWeekCounts()
     {
         $previous_week = strtotime("-1 week +1 day");
         $start_week = strtotime("last sunday midnight", $previous_week);
@@ -36,149 +40,81 @@ class ReportsController extends Controller
         $start_week = date("Y-m-d", $start_week);
         $end_week = date("Y-m-d", $end_week);
 
-        $clientsCount = Client::whereBetween('created_at', [$start_week, $end_week])->count();
+        $clients = Client::whereBetween('created_at', [$start_week, $end_week])->count();
+        $payments = Payment::whereBetween('created_at', [$start_week, $end_week])->count();
+        $plans = Plan::whereBetween('created_at', [$start_week, $end_week])->count();
+        $tokens = Token::whereBetween('created_at', [$start_week, $end_week])->count();
 
-        return $clientsCount;
+        return response(compact('clients', 'payments', 'plans', 'tokens'));
     }
 
-    public function lastWeekPayments()
+    public function currentWeekCounts()
     {
-        $previous_week = strtotime("-1 week +1 day");
-        $start_week = strtotime("last sunday midnight", $previous_week);
-        $end_week = strtotime("next saturday", $start_week);
-        $start_week = date("Y-m-d", $start_week);
-        $end_week = date("Y-m-d", $end_week);
+        $weekStart = Carbon::now()->startOfWeek(Carbon::SUNDAY);
+        $weekEnd = Carbon::now()->endOfWeek(Carbon::SATURDAY);
 
-        $paymentsCount = Payment::whereBetween('created_at', [$start_week, $end_week])->count();
+        $clients = Client::whereBetween('created_at', [$weekStart, $weekEnd])->count();
+        $payments = Payment::whereBetween('created_at', [$weekStart, $weekEnd])->count();
+        $plans = Plan::whereBetween('created_at', [$weekStart, $weekEnd])->count();
+        $tokens = Token::whereBetween('created_at', [$weekStart, $weekEnd])->count();
 
-        return $paymentsCount;
+        // $clients = Client::where('created_at', '>', Carbon::now()->startOfWeek())
+        //     ->where('created_at', '<', Carbon::now()->endOfWeek())
+        //     ->count();
+        // $payments = Payment::where('created_at', '>', Carbon::now()->startOfWeek())
+        //     ->where('created_at', '<', Carbon::now()->endOfWeek())
+        //     ->count();
+        // $plans = Plan::where('created_at', '>', Carbon::now()->startOfWeek())
+        //     ->where('created_at', '<', Carbon::now()->endOfWeek())
+        //     ->count();
+        // $tokens = Token::where('created_at', '>', Carbon::now()->startOfWeek())
+        //     ->where('created_at', '<', Carbon::now()->endOfWeek())
+        //     ->count();
+
+        return response(compact('clients', 'payments', 'plans', 'tokens'));
     }
 
-    public function lastWeekPlans()
+    public function currentMonthCounts()
     {
-        $previous_week = strtotime("-1 week +1 day");
-        $start_week = strtotime("last sunday midnight", $previous_week);
-        $end_week = strtotime("next saturday", $start_week);
-        $start_week = date("Y-m-d", $start_week);
-        $end_week = date("Y-m-d", $end_week);
+        $clients = Client::whereMonth('created_at', '=', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
+        $payments = Payment::whereMonth('created_at', '=', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
+        $plans = Plan::whereMonth('created_at', '=', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
+        $tokens = Token::whereMonth('created_at', '=', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
 
-        $plansCount = Plan::whereBetween('created_at', [$start_week, $end_week])->count();
-
-        return $plansCount;
+        return response(compact('clients', 'payments', 'plans', 'tokens'));
     }
 
-    public function lastWeekTokens()
+    public function lastMonthCounts()
     {
-        $previous_week = strtotime("-1 week +1 day");
-        $start_week = strtotime("last sunday midnight", $previous_week);
-        $end_week = strtotime("next saturday", $start_week);
-        $start_week = date("Y-m-d", $start_week);
-        $end_week = date("Y-m-d", $end_week);
+        $clients = Client::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
+        $payments = Payment::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
+        $plans = Plan::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
+        $tokens = Token::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
 
-        $tokensCount = Token::whereMonth('created_at', [$start_week, $end_week])->count();
-
-        return $tokensCount;
+        return response(compact('clients', 'payments', 'plans', 'tokens'));
     }
 
-    public function currentWeekClients()
+    public function userWeekCounts($username)
     {
-        $clientsCount = Client::where('created_at', '>', Carbon::now()->startOfWeek())
-            ->where('created_at', '<', Carbon::now()->endOfWeek())
-            ->count();
+        $weekStart = Carbon::now()->startOfWeek(Carbon::SUNDAY);
+        $weekEnd = Carbon::now()->endOfWeek(Carbon::SATURDAY);
 
-        return $clientsCount;
+        // $userTokensCount = Client::whereBetween('created_at', [$weekStart, $weekEnd])
+        //     ->where('created_by', $username)
+        //     ->count();
+
+        // return $userTokensCount;
+
+        $weeklyRevenue = Payment::whereBetween('created_at', [$weekStart, $weekEnd])->where('created_by', $username)->sum('amount');
+
+        return response(compact('weeklyRevenue'));
     }
 
-    public function currentWeekPayments()
+    public function weekly()
     {
-        $paymentsCount = Payment::where('created_at', '>', Carbon::now()->startOfWeek())
-            ->where('created_at', '<', Carbon::now()->endOfWeek())
-            ->count();
+        $now = Carbon::now()->startOfWeek(Carbon::SUNDAY);
+        $nowEnd = Carbon::now()->endOfWeek(Carbon::SATURDAY);
 
-        return $paymentsCount;
-    }
-
-    public function currentWeekPlans()
-    {
-        $plansCount = Plan::where('created_at', '>', Carbon::now()->startOfWeek())
-            ->where('created_at', '<', Carbon::now()->endOfWeek())
-            ->count();
-
-        return $plansCount;
-    }
-
-    public function currentWeekTokens()
-    {
-        $tokensCount = Token::where('created_at', '>', Carbon::now()->startOfWeek())
-            ->where('created_at', '<', Carbon::now()->endOfWeek())
-            ->count();
-
-        return $tokensCount;
-    }
-
-    public function currentMonthClients()
-    {
-        $clientsCount = Client::whereMonth('created_at', '=', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
-
-        return $clientsCount;
-    }
-
-    public function currentMonthPayments()
-    {
-        $paymentsCount = Payment::whereMonth('created_at', '=', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
-
-        return $paymentsCount;
-    }
-
-    public function currentMonthPlans()
-    {
-        $plansCount = Plan::whereMonth('created_at', '=', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
-
-        return $plansCount;
-    }
-
-    public function currentMonthTokens()
-    {
-        $tokensCount = Token::whereMonth('created_at', '=', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
-
-        return $tokensCount;
-    }
-
-    public function lastMonthClients()
-    {
-        $clientsCount = Client::whereMonth('created_at', '=', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
-
-        return $clientsCount;
-    }
-
-    public function lastMonthPayments()
-    {
-        $paymentsCount = Payment::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
-
-        return $paymentsCount;
-    }
-
-    public function lastMonthPlans()
-    {
-        $plansCount = Plan::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
-
-        return $plansCount;
-    }
-
-    public function lastMonthTokens()
-    {
-        $tokensCount = Token::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
-
-        return $tokensCount;
-    }
-
-    public function userWeekClients($username)
-    {
-        $userTokensCount = Client::where('created_at', '>', Carbon::now()->startOfWeek())
-            ->where('created_at', '<', Carbon::now()->endOfWeek())
-            ->where('created_by', $username)
-            ->count();
-
-        return $userTokensCount;
+        return response(compact('now', 'nowEnd'));
     }
 }

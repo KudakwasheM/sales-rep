@@ -20,9 +20,12 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        return PaymentResource::collection(
-            Payment::query()->orderBy('created_at', 'desc')->get()
-        );
+        // return PaymentResource::collection(
+        //     Payment::orderBy('created_at', 'desc')->get()
+        // );
+        $payments = Payment::with('client')->get();
+
+        return response(compact('payments'));
     }
 
     /**
@@ -31,26 +34,33 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePaymentRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $data = new Payment();
+        $data->type = $request['type'];
+        $data->amount = $request['amount'];
+        $data->reference = $request['reference'];
+        $data->client_id = $request['client_id'];
+        $data->created_by = $request['created_by'];
+        $data->plan_id = $request['plan_id'];
 
-        $data['created_by'] = Auth::user()->username;
+        $data->created_by = Auth::user()->username;
 
-        if ($data) {
-            $plan = Plan::find($data['plan_id']);
+        // if ($data) {
+        //     $plan = Plan::find($data['plan_id']);
 
-            $plan->paid_installments += 1;
-            $plan->balance -= $data['amount'];
-            if ($plan->balance < 0) {
-                $plan->balance = 0;
-            }
-            $payment = Payment::create($data);
+        //     $plan->paid_installments += 1;
+        //     $plan->balance -= $data['amount'];
+        //     if ($plan->balance < 0) {
+        //         $plan->balance = 0;
+        //     }
+        // $payment = Payment::create($data);
+        // $data->save();
 
-            $plan->save();
-            return response(compact('payment', 'plan'));
-        }
-        // return $data;
+        //     $plan->save();
+        //     return response(compact('payment', 'plan'));
+        // }
+        return response(compact('data'));
     }
 
     /**
