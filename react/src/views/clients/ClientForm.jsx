@@ -71,7 +71,7 @@ const ClientForm = () => {
     }
     return (
         <>
-            <div className="bg-white p-5 shadow-md flex flex-col">
+            <div className="bg-white p-5 shadow-md flex flex-col border-2 border-orange-100">
                 {client.id && (
                     <h2 className="text-xl font-lg text-center mb-4">
                         Update Client: {client.name}

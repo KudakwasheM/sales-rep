@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePlanRequest;
 use App\Http\Resources\PlanResource;
 use App\Models\Plan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
 {
@@ -34,6 +35,7 @@ class PlanController extends Controller
 
         // $data['installments'] = 0;
         $data['paid_installments'] = 0;
+        $data['created_by'] = Auth::user()->username;
 
         if (isset($data['deposit'])) {
             $data['balance'] = $data['amount'] - $data['deposit'];

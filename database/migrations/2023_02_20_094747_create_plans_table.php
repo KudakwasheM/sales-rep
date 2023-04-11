@@ -22,6 +22,7 @@ return new class extends Migration
             $table->double('deposit')->nullable();
             $table->double('balance');
             $table->unsignedBigInteger('client_id');
+            $table->string('created_by');
             $table->timestamps();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
         });

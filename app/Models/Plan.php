@@ -16,7 +16,8 @@ class Plan extends Model
         'paid_installments',
         'deposit',
         'balance',
-        'client_id'
+        'client_id',
+        'created_by'
     ];
 
     function client()

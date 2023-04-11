@@ -27,10 +27,11 @@ class StorePlanRequest extends FormRequest
             'amount' => 'required',
             'battery_type' => 'required|string',
             'installments' => 'required|numeric',
-            'paid_installments' => '',
+            'paid_installments' => 'numeric',
             'deposit' => 'required|numeric',
-            'balance' => '',
+            'balance' => 'numeric',
             'client_id' => 'numeric',
+            'created_by' => 'string',
         ];
     }
 }

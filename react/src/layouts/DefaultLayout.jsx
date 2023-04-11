@@ -27,9 +27,9 @@ const DefaultLayout = () => {
     }, []);
     return (
         <div className="relative flex min-h-screen bg-gray-100">
-            <aside class="bg-orange-400 shadow max-h-screen sticky top-0 text-white w-64 px-6">
+            <aside className="bg-orange-400 shadow max-h-screen sticky top-0 text-white w-64 px-6">
                 <Link to="/dashboard">
-                    <h1 class="text-4xl px-2 py-4">Sales</h1>
+                    <h1 className="text-4xl px-2 py-4">Sales</h1>
                 </Link>
                 <nav className="py-5">
                     <Link
@@ -91,9 +91,17 @@ const DefaultLayout = () => {
             </aside>
 
             <div className="flex-1">
-                <header className="bg-white flex sticky top-0 shadow px-2 py-4 justify-end">
+                <header className="bg-white flex sticky top-0 shadow-sm px-2 py-4 justify-end z-10 border-b-2 border-orange-200">
                     <div className="mr-8">{user.name}</div>
                 </header>
+                {/* <main>
+                    <Outlet />
+                    <footer className="flex bottom-0 shadow-sm text-center items-center justify-center px-2 py-4 z-10">
+                        <div className="text-black italic">
+                            Sales Rep &nbsp; 2023. All Right Reserved.
+                        </div>
+                    </footer>
+                </main> */}
                 <main className="p-8">
                     <Outlet />
                 </main>

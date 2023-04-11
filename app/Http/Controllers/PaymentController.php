@@ -46,20 +46,20 @@ class PaymentController extends Controller
 
         $data->created_by = Auth::user()->username;
 
-        // if ($data) {
-        //     $plan = Plan::find($data['plan_id']);
+        if ($data) {
+            $plan = Plan::find($data['plan_id']);
 
-        //     $plan->paid_installments += 1;
-        //     $plan->balance -= $data['amount'];
-        //     if ($plan->balance < 0) {
-        //         $plan->balance = 0;
-        //     }
-        // $payment = Payment::create($data);
-        // $data->save();
+            $plan->paid_installments += 1;
+            $plan->balance -= $data['amount'];
+            if ($plan->balance < 0) {
+                $plan->balance = 0;
+            }
+            // $payment = Payment::create($data);
+            $data->save();
 
-        //     $plan->save();
-        //     return response(compact('payment', 'plan'));
-        // }
+            $plan->save();
+            return response(compact('data', 'plan'));
+        }
         return response(compact('data'));
     }
 

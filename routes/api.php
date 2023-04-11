@@ -41,6 +41,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/counts', [ReportsController::class, 'allCounts']);
     Route::get('/counts/week/counts', [ReportsController::class, 'lastWeekCounts']);
     Route::get('/counts/current/week/counts', [ReportsController::class, 'currentWeekCounts']);
+    Route::get('/counts/clients/comparison', [ReportsController::class, 'weekComparisonClients']);
+    Route::get('/counts/payments/comparison', [ReportsController::class, 'weekComparisonPayments']);
+    Route::get('/counts/revenue/comparison', [ReportsController::class, 'weekRevenueComparison']);
     Route::get('/counts/{username}', [ReportsController::class, 'userWeekCounts']);
     Route::get('/counts/month/counts', [ReportsController::class, 'lastMonthCounts']);
     Route::get('/counts/current/month/counts', [ReportsController::class, 'currentMonthCounts']);

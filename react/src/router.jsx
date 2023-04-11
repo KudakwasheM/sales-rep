@@ -20,6 +20,7 @@ import PaymentForm from "./views/payments/PaymentForm";
 import Payment from "./views/payments/Payment";
 import TokenForm from "./views/tokens/TokenForm";
 import Token from "./views/tokens/Token";
+import PaymentFormEdit from "./views/payments/PaymentFormEdit";
 
 const router = createBrowserRouter([
     {
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/payments/:id",
-                element: <PaymentForm key="paymentUpdate" />,
+                element: <PaymentFormEdit key="paymentUpdate" />,
             },
             { path: "/payments/show/:id", element: <Payment /> },
 

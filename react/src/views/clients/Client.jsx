@@ -34,7 +34,7 @@ const Client = () => {
     }
     return (
         <>
-            <div className="bg-white p-5 shadow-md flex flex-col">
+            <div className="bg-white p-5 shadow-md flex flex-col border-2 border-orange-100">
                 <h2 className="text-xl font-lg text-center mb-4">
                     Showing client: {client.name}
                 </h2>

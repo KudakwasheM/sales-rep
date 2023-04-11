@@ -1,30 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../../axios-client";
 import { useStateContext } from "../../contexts/ContextProvider";
 
-const PaymentForm = () => {
-    const typeRef = useRef();
-    const amountRef = useRef();
-    const referenceRef = useRef();
-    const clientIdRef = useRef();
-    const planIdRef = useRef();
+const PaymentFormEdit = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState(null);
     const { setNotification } = useStateContext();
     const [clients, setClients] = useState([]);
-    const [thePlanId, setThePlanId] = useState();
+    const [thePlanId, setThePlanId] = useState(null);
+
+    const [payment, setPayment] = useState({
+        id: null,
+        type: "",
+        amount: 0,
+        reference: "",
+        client_id: null,
+        // plan_id: id ? payment.plan_id : thePlanId,
+        plan_id: null,
+        created_by: "",
+    });
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        const payment = {
-            type: typeRef.current.value,
-            amount: amountRef.current.value,
-            reference: referenceRef.current.value,
-            client_id: clientIdRef.current.value,
-            plan_id: planIdRef.current.value,
-        };
 
         await axiosClient
             .post("/payments", payment)
@@ -50,12 +50,21 @@ const PaymentForm = () => {
         });
     };
 
-    const getClientPlan = (clientId) => {
-        axiosClient.get(`clients/${clientId}/plan`).then(({ data }) => {
-            setThePlanId(data.client.plans[0].id);
+    const getPayment = async () => {
+        setLoading(true);
+
+        await axiosClient.get(`/payments/${id}`).then(({ data }) => {
+            setLoading(false);
+            setPayment(data);
         });
     };
 
+    if (id) {
+        useEffect(() => {
+            getPayment();
+            getAllClients();
+        }, []);
+    }
     useEffect(() => {
         getAllClients();
     }, []);
@@ -63,7 +72,7 @@ const PaymentForm = () => {
         <>
             <div className="bg-white p-5 shadow-md flex flex-col">
                 <h2 className="text-xl font-lg text-center mb-4">
-                    Create New Payment
+                    Update Payment
                 </h2>
 
                 <div>
@@ -80,7 +89,13 @@ const PaymentForm = () => {
                             <label htmlFor="">Type</label>
                             <select
                                 className="py-2 px-2 mb-3 border border-gray-200"
-                                ref={typeRef}
+                                value={payment.type}
+                                onChange={(e) =>
+                                    setPayment({
+                                        ...payment,
+                                        type: e.target.value,
+                                    })
+                                }
                             >
                                 <option value="">--- Select Type ---</option>
                                 <option value="cash_usd">Cash - USD</option>
@@ -90,20 +105,38 @@ const PaymentForm = () => {
                             <label htmlFor="">Amount</label>
                             <input
                                 className="py-2 px-2 mb-3 border border-gray-200"
-                                ref={amountRef}
+                                value={payment.amount}
+                                onChange={(e) =>
+                                    setPayment({
+                                        ...payment,
+                                        amount: e.target.value,
+                                    })
+                                }
                                 placeholder="50.12"
                             />
                             <label htmlFor="">Reference</label>
                             <input
                                 className="py-2 px-2 mb-3 border border-gray-200"
-                                ref={referenceRef}
+                                value={payment.reference}
+                                onChange={(e) =>
+                                    setPayment({
+                                        ...payment,
+                                        reference: e.target.value,
+                                    })
+                                }
                                 placeholder="MP230304.1627.L00148 / Cash In Hand"
                             />
                             <label htmlFor="">Client</label>
                             <select
+                                readOnly
                                 className="py-2 px-2 mb-3 border border-gray-200"
-                                ref={clientIdRef}
-                                onChange={(e) => getClientPlan(e.target.value)}
+                                value={payment.client_id}
+                                onChange={(e) =>
+                                    setPayment({
+                                        ...payment,
+                                        client_id: e.target.value,
+                                    })
+                                }
                             >
                                 <option value="">--- Select Client ---</option>
                                 {clients.map((client) => (
@@ -116,15 +149,20 @@ const PaymentForm = () => {
                             <label htmlFor="">Plan</label>
                             <input
                                 className="py-2 px-2 mb-3 border border-gray-200"
-                                // value={plan.id}
-                                value={thePlanId}
-                                ref={planIdRef}
                                 readOnly
+                                value={payment.plan_id}
+                                onChange={(e) =>
+                                    setPayment({
+                                        ...payment,
+                                        plan_id: e.target.value,
+                                    })
+                                }
                                 placeholder="13 - 963258741"
                             />
 
                             <button className="py-3 bg-green-400 text-white">
-                                CREATE
+                                {!payment.id && "CREATE"}
+                                {payment.id && "UPDATE"}
                             </button>
                         </form>
                     )}
@@ -134,4 +172,4 @@ const PaymentForm = () => {
     );
 };
 
-export default PaymentForm;
+export default PaymentFormEdit;
