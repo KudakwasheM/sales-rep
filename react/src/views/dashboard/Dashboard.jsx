@@ -153,69 +153,68 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <div>
-                <div className="grid grid-cols-2 mb-3 gap-4">
-                    <div className="bg-white p-3 border-2 border-orange-100 rounded-xl">
-                        <Bar
-                            className="mb-3"
-                            data={{
-                                labels: Object.keys(clientsData),
-                                datasets: [
-                                    {
-                                        label: "Clients Added Over 5 Weeks",
-                                        data: Object.values(clientsData),
-                                    },
-                                ],
-                            }}
-                        />
-                    </div>
-                    <div className="bg-white p-3 border-2 border-orange-100 rounded-xl">
-                        <Bar
-                            data={{
-                                labels: Object.keys(paymentsData),
-                                datasets: [
-                                    {
-                                        label: "Payments Revenue Over 5 Weeks",
-                                        data: Object.values(paymentsData),
-                                    },
-                                ],
-                            }}
-                        />
-                    </div>
-                </div>
-                <div className="bg-white p-3 border-2 border-orange-100 rounded-xl mb-3">
-                    <Line
+            <div className="grid grid-cols-2 mb-3 gap-4">
+                <div className="bg-white p-3 border-2 border-orange-100 rounded-xl">
+                    <Bar
+                        className="mb-3"
                         data={{
-                            labels: Object.keys(weekRevenueData),
+                            labels: Object.keys(clientsData),
                             datasets: [
                                 {
-                                    label: "Current Week",
-                                    data: Object.values(weekRevenueData),
-                                    //     borderColor: Utils.CHART_COLORS.red,
-                                    //     backgroundColor: Utils.transparentize(
-                                    //         Utils.CHART_COLORS.red,
-                                    //         0.5
-                                    //     ),
-                                },
-                                {
-                                    label: "Last Week",
-                                    data: Object.values(lastRevenueData),
-                                    //     borderColor: Utils.CHART_COLORS.blue,
-                                    //     backgroundColor: Utils.transparentize(
-                                    //         Utils.CHART_COLORS.blue,
-                                    //         0.5
-                                    //     ),
+                                    label: "Clients Added Over 5 Weeks",
+                                    data: Object.values(clientsData),
                                 },
                             ],
                         }}
-                        options={{
-                            tension: 0.4,
-                            title: {
-                                text: "Revenue Comaprison Graph",
-                            },
-                        }}
                     />
                 </div>
+                <div className="bg-white p-3 border-2 border-orange-100 rounded-xl">
+                    <Bar
+                        data={{
+                            labels: Object.keys(paymentsData),
+                            datasets: [
+                                {
+                                    label: "Payments Revenue Over 5 Weeks",
+                                    data: Object.values(paymentsData),
+                                },
+                            ],
+                        }}
+                        options={{}}
+                    />
+                </div>
+            </div>
+            <div className="bg-white p-3 border-2 border-orange-100 rounded-xl mb-3">
+                <Line
+                    data={{
+                        labels: Object.keys(weekRevenueData),
+                        datasets: [
+                            {
+                                label: "Current Week",
+                                data: Object.values(weekRevenueData),
+                                //     borderColor: Utils.CHART_COLORS.red,
+                                //     backgroundColor: Utils.transparentize(
+                                //         Utils.CHART_COLORS.red,
+                                //         0.5
+                                //     ),
+                            },
+                            {
+                                label: "Last Week",
+                                data: Object.values(lastRevenueData),
+                                //     borderColor: Utils.CHART_COLORS.blue,
+                                //     backgroundColor: Utils.transparentize(
+                                //         Utils.CHART_COLORS.blue,
+                                //         0.5
+                                //     ),
+                            },
+                        ],
+                    }}
+                    options={{
+                        tension: 0.4,
+                        title: {
+                            text: "Revenue Comaprison Graph",
+                        },
+                    }}
+                />
             </div>
         </div>
     );
