@@ -30,13 +30,19 @@ class ClientController extends Controller
         );
     }
 
+    public function repClients()
+    {
+        $username = auth()->user()->username;
+        $data = Client::where('created_by', $username)->get();
+        return response(compact('data'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(StoreClientRequest $request, StorePlanRequest $req)
     public function store(StoreClientRequest $request)
     {
 
@@ -52,20 +58,16 @@ class ClientController extends Controller
             foreach ($docs as $doc) {
                 $file = new File();
                 $fileName = time() . '_' . $doc->getClientOriginalName();
-                $path = $doc->store('/files/clients/' . $client->id);
+                $path = $doc->storeAs('/api/clients/' . $client->id, $fileName);
                 $file['name'] = $fileName;
                 $file['path'] = $path;
                 $file['client_id'] = $client->id;
 
-                $doc->move(\public_path('/files/clients/' . $client->id), $fileName);
-
                 $file->save();
-                // echo $path;
             }
-            // return $docs;
+            // return response(new ClientResource($data), 201);
+            return response(compact('client'));
         }
-
-        return response(new ClientResource($client), 201);
     }
 
     /**
@@ -74,9 +76,10 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client)
+    public function show($id)
     {
-        return new ClientResource($client);
+        $data = Client::with('plans')->find($id);
+        return response(compact('data'));
     }
 
     public function showClientPlan(Client $client)

@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePlanRequest;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
 use App\Models\Plan;
+use App\Models\Rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,6 +29,13 @@ class PaymentController extends Controller
         return response(compact('payments'));
     }
 
+    public function repPayments()
+    {
+        $username = auth()->user()->username;
+        $data = Payment::where('created_by', $username)->get();
+        return response(compact('data'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -38,15 +46,21 @@ class PaymentController extends Controller
     {
         $data = new Payment();
         $data->type = $request['type'];
-        $data->amount = $request['amount'];
+        $data->paid_amount = $request['paid_amount'];
         $data->reference = $request['reference'];
         $data->client_id = $request['client_id'];
         $data->created_by = $request['created_by'];
         $data->plan_id = $request['plan_id'];
 
+        $rate = Rate::latest()->first();
+
+        if ($request['type'] == 'cash_rtgs' || $request['type'] == 'ecocash') {
+            $data->amount = $request['paid_amount'] / $rate->amount;
+        }
+        $data->amount = $request['paid_amount'];
         $data->created_by = Auth::user()->username;
 
-        if ($data) {
+        if (isset($data->plan_id)) {
             $plan = Plan::find($data['plan_id']);
 
             $plan->paid_installments += 1;
@@ -69,9 +83,11 @@ class PaymentController extends Controller
      * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show($id)
     {
-        return new PaymentResource($payment);
+        $data = Payment::with('client')->find($id);
+
+        return response(compact('data'));
     }
 
     /**

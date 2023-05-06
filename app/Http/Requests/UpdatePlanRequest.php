@@ -24,6 +24,7 @@ class UpdatePlanRequest extends FormRequest
     public function rules()
     {
         return [
+            'paid_amount' => 'numeric',
             'amount' => 'numeric',
             'battery_type' => 'string',
             'installments' => 'numeric',

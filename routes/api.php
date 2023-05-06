@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\RateController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TokenController;
@@ -48,7 +49,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/counts/month/counts', [ReportsController::class, 'lastMonthCounts']);
     Route::get('/counts/current/month/counts', [ReportsController::class, 'currentMonthCounts']);
 
-    Route::get('/startof', [ReportsController::class, 'weekly']);
+    //User Counts
+    Route::get('/salesrep/weeklyrevenue', [ReportsController::class, 'weekRepRevenueComparison']);
+    Route::get('/salesrep/dailyrevenue', [ReportsController::class, 'dayRevenue']);
+    Route::get('/salesrep/totalrevenue', [ReportsController::class, 'allUserRevenue']);
+    Route::get('/salesrep/clients', [ReportsController::class, 'userClients']);
+
+    Route::resource('/rate', RateController::class);
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);

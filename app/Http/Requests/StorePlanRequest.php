@@ -24,12 +24,10 @@ class StorePlanRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount' => 'required',
+            'amount' => 'required|numeric',
             'battery_type' => 'required|string',
             'installments' => 'required|numeric',
-            'paid_installments' => 'numeric',
-            'deposit' => 'required|numeric',
-            'balance' => 'numeric',
+            'deposit' => 'numeric',
             'client_id' => 'numeric',
             'created_by' => 'string',
         ];

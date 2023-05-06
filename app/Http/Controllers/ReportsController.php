@@ -223,11 +223,90 @@ class ReportsController extends Controller
         return response(compact('revenue'));
     }
 
-    public function weekly()
+    public function weekRepRevenueComparison()
     {
-        $now = Carbon::now()->startOfWeek(Carbon::SUNDAY);
-        $nowEnd = Carbon::now()->endOfWeek(Carbon::SATURDAY);
+        $username = auth()->user()->username;
 
-        return response(compact('now', 'nowEnd'));
+        $today = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today())->sum('amount');
+        $yesterday = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(1))->sum('amount');
+        $twoDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(2))->sum('amount');
+        $threeDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(3))->sum('amount');
+        $fourDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(4))->sum('amount');
+        $fiveDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(5))->sum('amount');
+        $sixDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(6))->sum('amount');
+        $sevenDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(7))->sum('amount');
+        $eightDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(8))->sum('amount');
+        $nineDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(9))->sum('amount');
+        $tenDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(10))->sum('amount');
+        $elevenDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(11))->sum('amount');
+        $twelveDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(12))->sum('amount');
+        $thirteenDaysAgo = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(13))->sum('amount');
+
+        $todayPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today())->sum('deposit');
+        $yesterdayPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(1))->sum('deposit');
+        $twoDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(2))->sum('deposit');
+        $threeDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(3))->sum('deposit');
+        $fourDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(4))->sum('deposit');
+        $fiveDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(5))->sum('deposit');
+        $sixDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(6))->sum('deposit');
+        $sevenDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(7))->sum('deposit');
+        $eightDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(8))->sum('deposit');
+        $nineDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(9))->sum('deposit');
+        $tenDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(10))->sum('deposit');
+        $elevenDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(11))->sum('deposit');
+        $twelveDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(12))->sum('deposit');
+        $thirteenDaysAgoPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today()->subDays(13))->sum('deposit');
+
+        $thisWeek = [
+            Carbon::today()->subDays(6)->format('l') => ($sixDaysAgoPlan + $sixDaysAgo),
+            Carbon::today()->subDays(5)->format('l') => ($fiveDaysAgoPlan + $fiveDaysAgo),
+            Carbon::today()->subDays(4)->format('l') => ($fourDaysAgoPlan + $fourDaysAgo),
+            Carbon::today()->subDays(3)->format('l') => ($threeDaysAgoPlan + $threeDaysAgo),
+            Carbon::today()->subDays(2)->format('l') => ($twoDaysAgoPlan + $twoDaysAgo),
+            Carbon::today()->subDays(1)->format('l') => ($yesterdayPlan + $yesterday),
+            Carbon::today()->format('l') => ($today + $todayPlan),
+        ];
+
+        $lastWeek = [
+            Carbon::today()->subDays(13)->format('l') => $thirteenDaysAgoPlan + $thirteenDaysAgo,
+            Carbon::today()->subDays(12)->format('l') => $twelveDaysAgoPlan + $twelveDaysAgo,
+            Carbon::today()->subDays(11)->format('l') => $elevenDaysAgoPlan + $elevenDaysAgo,
+            Carbon::today()->subDays(10)->format('l') => $tenDaysAgoPlan + $tenDaysAgo,
+            Carbon::today()->subDays(9)->format('l') => $nineDaysAgoPlan + $nineDaysAgo,
+            Carbon::today()->subDays(8)->format('l') => $eightDaysAgoPlan + $eightDaysAgo,
+            Carbon::today()->subDays(7)->format('l') => $sevenDaysAgoPlan + $sevenDaysAgo,
+        ];
+
+        return response(compact('thisWeek', 'lastWeek'));
+    }
+
+    public function dayRevenue()
+    {
+        $username = auth()->user()->username;
+
+        $today = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today())->sum('amount');
+        $todayPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today())->sum('deposit');
+        $totalRevenue = $today + $todayPlan;
+        return response(compact('totalRevenue'));
+    }
+
+    public function userClients()
+    {
+        $username = auth()->user()->username;
+        $clients = Client::where('created_by', $username)->count();
+
+        return response(compact('clients'));
+    }
+
+    public function allUserRevenue()
+    {
+        $username = auth()->user()->username;
+
+        $deposits = Plan::where('created_by', $username)->sum('deposit');
+        $payments = Payment::where('created_by', $username)->sum('amount');
+
+        $revenue = $deposits + $payments;
+
+        return response(compact('revenue'));
     }
 }

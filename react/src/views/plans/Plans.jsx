@@ -75,7 +75,7 @@ const Plans = () => {
                     {loading && (
                         <tbody>
                             <tr>
-                                <td colSpan={7} className="text-center">
+                                <td colSpan={8} className="text-center">
                                     Loading...
                                 </td>
                             </tr>
@@ -83,49 +83,62 @@ const Plans = () => {
                     )}
                     {!loading && (
                         <tbody>
-                            {plans.map((plan) => (
-                                <tr key={plan.id}>
-                                    <td className="py-2">{plan.amount}</td>
-                                    <td className="py-2">
-                                        {plan.battery_type == "d_100_usd" &&
-                                            "D 100 USD"}
-                                        {plan.battery_type == "d_100_rtgs" &&
-                                            "D 100 RTGS"}
-                                    </td>
-                                    <td className="py-2">
-                                        {plan.installments}
-                                    </td>
-                                    <td className="py-2">
-                                        {plan.paid_installments}
-                                    </td>
+                            {plans.length > 0 ? (
+                                plans.map((plan) => (
+                                    <tr key={plan.id}>
+                                        <td className="py-2">{plan.amount}</td>
+                                        <td className="py-2">
+                                            {plan.battery_type == "d_100_usd" &&
+                                                "D 100 USD"}
+                                            {plan.battery_type ==
+                                                "d_100_rtgs" && "D 100 RTGS"}
+                                        </td>
+                                        <td className="py-2">
+                                            {plan.installments}
+                                        </td>
+                                        <td className="py-2">
+                                            {plan.paid_installments}
+                                        </td>
 
-                                    <td className="py-2">{plan.deposit}</td>
-                                    <td className="py-2">{plan.balance}</td>
-                                    <td className="py-2">{plan.client.name}</td>
-                                    <td className="text-sm py-2">
-                                        <Link
-                                            to={"/plans/show/" + plan.id}
-                                            className="bg-blue-300 p-1 text-white"
-                                        >
-                                            View
-                                        </Link>
-                                        &nbsp;
-                                        <Link
-                                            to={"/plans/" + plan.id}
-                                            className="bg-green-300 p-1 text-white"
-                                        >
-                                            Edit
-                                        </Link>
-                                        &nbsp;
-                                        <button
-                                            onClick={(ev) => onDelete(plan)}
-                                            className="bg-red-500 text-white p-1"
-                                        >
-                                            Delete
-                                        </button>
+                                        <td className="py-2">{plan.deposit}</td>
+                                        <td className="py-2">{plan.balance}</td>
+                                        <td className="py-2">
+                                            {plan.client.name}
+                                        </td>
+                                        <td className="text-sm py-2">
+                                            <Link
+                                                to={"/plans/show/" + plan.id}
+                                                className="bg-blue-300 p-1 text-white"
+                                            >
+                                                View
+                                            </Link>
+                                            &nbsp;
+                                            <Link
+                                                to={"/plans/" + plan.id}
+                                                className="bg-green-300 p-1 text-white"
+                                            >
+                                                Edit
+                                            </Link>
+                                            &nbsp;
+                                            <button
+                                                onClick={(ev) => onDelete(plan)}
+                                                className="bg-red-500 text-white p-1"
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td
+                                        colSpan={8}
+                                        className="text-center text-red-600"
+                                    >
+                                        No Plans Found
                                     </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     )}
                 </table>

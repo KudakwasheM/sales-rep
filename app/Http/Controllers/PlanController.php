@@ -6,6 +6,7 @@ use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Http\Resources\PlanResource;
 use App\Models\Plan;
+use App\Models\Rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,8 +19,15 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $data = Plan::with('client')->orderBy('id', 'desc')->get();
+        $data = Plan::with('client')->get();
 
+        return response(compact('data'));
+    }
+
+    public function repClients()
+    {
+        $username = auth()->user()->username;
+        $data = Plan::where('created_by', $username)->get();
         return response(compact('data'));
     }
 
@@ -33,13 +41,10 @@ class PlanController extends Controller
     {
         $data = $request->validated();
 
-        // $data['installments'] = 0;
         $data['paid_installments'] = 0;
         $data['created_by'] = Auth::user()->username;
 
-        if (isset($data['deposit'])) {
-            $data['balance'] = $data['amount'] - $data['deposit'];
-        }
+        $data['balance'] = $data['amount'] - $data['deposit'];
 
         $plan = Plan::create($data);
 
@@ -52,9 +57,11 @@ class PlanController extends Controller
      * @param  \App\Models\Plan  $plan
      * @return \Illuminate\Http\Response
      */
-    public function show(Plan $plan)
+    public function show($id)
     {
-        return new PlanResource($plan);
+        $data = Plan::with('client')->find($id);
+
+        return response(compact('data'));
     }
 
     /**

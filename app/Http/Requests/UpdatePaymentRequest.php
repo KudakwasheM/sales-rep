@@ -25,6 +25,7 @@ class UpdatePaymentRequest extends FormRequest
     {
         return [
             'type' => 'string',
+            'paid_amount' => 'numeric',
             'amount' => 'numeric',
             'reference' => 'string',
             'client_id' => 'numeric',

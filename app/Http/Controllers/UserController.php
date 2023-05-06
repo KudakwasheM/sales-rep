@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -50,6 +51,30 @@ class UserController extends Controller
     public function show(User $user)
     {
         return new UserResource($user);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        # Validation
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+
+        #Match The Old Password
+        if (!Hash::check($request->old_password, auth()->user()->password)) {
+            return back()->with("error", "Old Password Doesn't match!");
+        }
+
+        #Update the new Password
+        User::whereId(auth()->user()->id)->update([
+            'password' => bcrypt($request->new_password)
+        ]);
+
+        return response()->json([
+            'message' => 'Password Updated Successfully'
+        ]);
     }
 
     /**

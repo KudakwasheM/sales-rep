@@ -40,6 +40,7 @@ const PlanForm = () => {
                     }
                 });
         } else {
+            console.log(plan);
             await axiosClient
                 .post("/plans", plan)
                 .then((response) => {
@@ -176,7 +177,6 @@ const PlanForm = () => {
                                         client_id: e.target.value,
                                     })
                                 }
-                                name="role_id"
                             >
                                 <option value="">--- Select Client ---</option>
                                 {clients.map((client) => (

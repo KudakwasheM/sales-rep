@@ -42,20 +42,39 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\User::factory()->create([
             'name' => 'Super User',
-            'username' => 'super313',
-            'ec_number' => 'EC00001',
+            'username' => 'super',
             'email' => 'super@sales.com',
             'phone' => '+263123123123',
+            'role_id' => 1,
             'password' => bcrypt('Super313'),
         ]);
 
         \App\Models\User::factory()->create([
             'name' => 'Admin User',
-            'username' => 'admin313',
-            'ec_number' => 'EC00002',
+            'username' => 'admin',
             'email' => 'admin@sales.com',
             'phone' => '+263123123124',
+            'role_id' => 2,
             'password' => bcrypt('Admin313'),
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Sale Rep',
+            'username' => 'sales',
+            'email' => 'sales@sales.com',
+            'phone' => '+263123123124',
+            'role_id' => 3,
+            'password' => bcrypt('Sales313'),
+        ]);
+
+        \App\Models\Client::factory()->create([
+            'name' => 'Kudakwashe Masaya',
+            'id_number' => '59-174530T34',
+            'dob' => '1996-12-10',
+            'ec_number' => '5143',
+            'type' => 'v_mum_usd',
+            'battery_number' => '123456789',
+            'created_by' => 'super',
         ]);
     }
 }

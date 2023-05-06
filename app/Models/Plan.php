@@ -14,6 +14,7 @@ class Plan extends Model
         'battery_type',
         'installments',
         'paid_installments',
+        'paid_deposit',
         'deposit',
         'balance',
         'client_id',
