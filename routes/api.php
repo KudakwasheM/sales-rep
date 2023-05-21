@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\RateController;
@@ -23,18 +24,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::apiResource('/users', UserController::class);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
 
-    Route::apiResource('/users', UserController::class);
+    //Users
+
+    //Roles
     Route::apiResource('/roles', RoleController::class);
+
+    //Clients
+    Route::get('/clients/user-clients', [ClientController::class, 'repClients']);
     Route::apiResource('/clients', ClientController::class);
     Route::get('/clients/{client}/plan', [ClientController::class, 'showClientPlan']);
     // Route::get('/clients/plan', [ClientController::class, 'showClientPlan']);
+
+    //Paymens
+    Route::get('/payments/user-payments', [PaymentController::class, 'repPayments']);
     Route::apiResource('/payments', PaymentController::class);
+
+    //Plans
+    Route::get('/plans/user-plans', [PlanController::class, 'repPlans']);
     Route::apiResource('/plans', PlanController::class);
+
+    //Tokens
+    Route::get('/tokens/user-tokens', [TokenController::class, 'clientTokens']);
     Route::apiResource('/tokens', TokenController::class);
 
     // Counts 
@@ -48,6 +64,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/counts/{username}', [ReportsController::class, 'userWeekCounts']);
     Route::get('/counts/month/counts', [ReportsController::class, 'lastMonthCounts']);
     Route::get('/counts/current/month/counts', [ReportsController::class, 'currentMonthCounts']);
+
+    //File Store
+    Route::post('/files/store/{id}', [FileController::class, 'store']);
 
     //User Counts
     Route::get('/salesrep/weeklyrevenue', [ReportsController::class, 'weekRepRevenueComparison']);

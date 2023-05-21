@@ -17,24 +17,28 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         \App\Models\Role::factory()->create([
+            'id' => 1,
             'name' => 'Super',
             'slug' => 'superuser',
             'description' => 'This is a super user',
         ]);
 
         \App\Models\Role::factory()->create([
+            'id' => 2,
             'name' => 'Admin',
             'slug' => 'adminuser',
             'description' => 'This is an admin user',
         ]);
 
         \App\Models\Role::factory()->create([
+            'id' => 3,
             'name' => 'Administration',
             'slug' => 'administrationuser',
             'description' => 'This is a sdministration user',
         ]);
 
         \App\Models\Role::factory()->create([
+            'id' => 4,
             'name' => 'SalesRep',
             'slug' => 'salesrepuser',
             'description' => 'This is a sales representative user',
@@ -62,8 +66,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Sale Rep',
             'username' => 'sales',
             'email' => 'sales@sales.com',
-            'phone' => '+263123123124',
-            'role_id' => 3,
+            'phone' => '+263123123125',
+            'role_id' => 4,
             'password' => bcrypt('Sales313'),
         ]);
 

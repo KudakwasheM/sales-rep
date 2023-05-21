@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTokenRequest;
 use App\Http\Requests\UpdateTokenRequest;
 use App\Http\Resources\TokenResource;
+use App\Models\Client;
 use App\Models\Token;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TokenController extends Controller
 {
@@ -20,6 +23,15 @@ class TokenController extends Controller
         $data = Token::with('client')->orderBy('id', 'desc')->get();
 
         return response(compact('data'));
+    }
+
+    public function clientTokens()
+    {
+        $username = auth()->user()->username;
+        $clients = Client::where('created_by', $username)->pluck('id');
+        $data = Token::with('client')->whereIn('client_id', $clients)->whereDate('created_at', Carbon::today())->get();
+        return response(compact('data'));
+        // $token = Token::whereIn
     }
 
     /**

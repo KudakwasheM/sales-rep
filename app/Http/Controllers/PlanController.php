@@ -24,10 +24,10 @@ class PlanController extends Controller
         return response(compact('data'));
     }
 
-    public function repClients()
+    public function repPlans()
     {
         $username = auth()->user()->username;
-        $data = Plan::where('created_by', $username)->get();
+        $data = Plan::with('client')->where('created_by', $username)->get();
         return response(compact('data'));
     }
 

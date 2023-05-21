@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+// use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Jenssegers\Mongodb\Schema\Blueprint;
 
 return new class extends Migration
 {
@@ -11,9 +12,10 @@ return new class extends Migration
      *
      * @return void
      */
+    protected $connection = 'mongodb';
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::connection($this->connection)->create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug');

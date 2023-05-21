@@ -59,15 +59,16 @@ class ClientController extends Controller
                 $file = new File();
                 $fileName = time() . '_' . $doc->getClientOriginalName();
                 $path = $doc->storeAs('/api/clients/' . $client->id, $fileName);
-                $file['name'] = $fileName;
                 $file['path'] = $path;
+                $file['name'] = $fileName;
                 $file['client_id'] = $client->id;
 
                 $file->save();
             }
             // return response(new ClientResource($data), 201);
-            return response(compact('client'));
         }
+
+        return response(compact('client'));
     }
 
     /**
@@ -78,13 +79,13 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        $data = Client::with('plans')->find($id);
+        $data = Client::with('plans', 'files')->find($id);
         return response(compact('data'));
     }
 
     public function showClientPlan(Client $client)
     {
-        $client = Client::with('plans')->find($client->id);
+        $client = Client::with('plans', 'files')->find($client->id);
 
         return response(compact('client'));
     }

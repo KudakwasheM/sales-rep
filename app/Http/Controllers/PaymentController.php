@@ -32,7 +32,7 @@ class PaymentController extends Controller
     public function repPayments()
     {
         $username = auth()->user()->username;
-        $data = Payment::where('created_by', $username)->get();
+        $data = Payment::with('client')->where('created_by', $username)->get();
         return response(compact('data'));
     }
 

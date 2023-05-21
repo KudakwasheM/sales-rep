@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use App\Http\Requests\StoreFileRequest;
 use App\Http\Requests\UpdateFileRequest;
+use App\Models\Client;
+use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
@@ -34,9 +36,29 @@ class FileController extends Controller
      * @param  \App\Http\Requests\StoreFileRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreFileRequest $request)
+    public function store(Request $request, $id)
     {
-        //
+        $client = Client::find($id);
+
+        if ($request->hasFile('file')) {
+            $docs = $request->file('file');
+
+            foreach ($docs as $doc) {
+                $file = new File();
+                $fileName = time() . '_' . $doc->getClientOriginalName();
+                $path = $doc->storeAs('/api/clients/' . $client->id, $fileName);
+                $file['path'] = $path;
+                $file['name'] = $fileName;
+                $file['client_id'] = $client->id;
+                // File::create($file);
+                $file->save();
+            }
+        }
+
+        // foreach ($files as $file) {
+        // }
+
+        // return response(compact('client', 'files'));
     }
 
     /**
