@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\PlanResource;
 use App\Models\Client;
-use App\Models\ClientFile;
 use App\Models\File;
 use App\Models\Plan;
 use Illuminate\Http\Request;
