@@ -2282,7 +2282,7 @@ return array(
     'Laravel\\Sanctum\\Http\\Middleware\\CheckScopes' => $vendorDir . '/laravel/sanctum/src/Http/Middleware/CheckScopes.php',
     'Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful' => $vendorDir . '/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php',
     'Laravel\\Sanctum\\NewAccessToken' => $vendorDir . '/laravel/sanctum/src/NewAccessToken.php',
-    'Laravel\\Sanctum\\PersonalAccessToken' => $vendorDir . '/laravel/sanctum/src/PersonalAccessToken.php',
+    'Laravel\\Sanctum\\PersonalAccessToken' => $baseDir . '/app/Overrides/PersonalAccessToken.php',
     'Laravel\\Sanctum\\Sanctum' => $vendorDir . '/laravel/sanctum/src/Sanctum.php',
     'Laravel\\Sanctum\\SanctumServiceProvider' => $vendorDir . '/laravel/sanctum/src/SanctumServiceProvider.php',
     'Laravel\\Sanctum\\TransientToken' => $vendorDir . '/laravel/sanctum/src/TransientToken.php',

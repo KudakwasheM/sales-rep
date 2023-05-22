@@ -65,7 +65,7 @@ return array(
     'Laravel\\Telescope\\Database\\Factories\\' => array($vendorDir . '/laravel/telescope/database/factories'),
     'Laravel\\Telescope\\' => array($vendorDir . '/laravel/telescope/src'),
     'Laravel\\SerializableClosure\\' => array($vendorDir . '/laravel/serializable-closure/src'),
-    'Laravel\\Sanctum\\' => array($vendorDir . '/laravel/sanctum/src'),
+    'Laravel\\Sanctum\\' => array($baseDir . '/app/Overrides', $vendorDir . '/laravel/sanctum/src'),
     'Laravel\\Sail\\' => array($vendorDir . '/laravel/sail/src'),
     'Jenssegers\\Mongodb\\' => array($vendorDir . '/jenssegers/mongodb/src'),
     'Jean85\\' => array($vendorDir . '/jean85/pretty-package-versions/src'),
