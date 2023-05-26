@@ -103,6 +103,7 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        //
+        $file->delete();
+        return response('', 204);
     }
 }
