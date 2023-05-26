@@ -67,8 +67,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //File Store
     Route::post('/files/store/{id}', [FileController::class, 'store']);
-    Route::delete('/files/{id}', [FileController::class, 'delete']);
-
     Route::delete('/files/{id}', [FileController::class, 'destroy']);
 
     //User Counts

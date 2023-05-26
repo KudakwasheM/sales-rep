@@ -305,8 +305,8 @@ class ReportsController extends Controller
         $deposits = Plan::where('created_by', $username)->sum('deposit');
         $payments = Payment::where('created_by', $username)->sum('amount');
 
-        $revenue = $deposits + $payments;
+        // $revenue = $deposits + $payments;
 
-        return response(compact('revenue'));
+        return response(compact('payments'));
     }
 }
