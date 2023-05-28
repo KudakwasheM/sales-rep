@@ -25,7 +25,7 @@ class StoreTokenRequest extends FormRequest
     {
         return [
             'number' => 'required|string',
-            'client_id' => 'required|numeric',
+            'client_id' => 'required|string',
             // 'duration' => 'required|numeric',
             // 'status' => 'required|boolean'
         ];

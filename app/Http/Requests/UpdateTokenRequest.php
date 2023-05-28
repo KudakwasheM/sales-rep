@@ -25,7 +25,7 @@ class UpdateTokenRequest extends FormRequest
     {
         return [
             'number' => 'string',
-            'client_id' => 'numeric',
+            'client_id' => 'string',
             // 'duration' => 'required|numeric',
             // 'status' => 'required|boolean'
         ];

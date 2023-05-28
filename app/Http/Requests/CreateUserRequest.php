@@ -30,7 +30,7 @@ class CreateUserRequest extends FormRequest
             'ec_number' => 'required|string|unique:users,ec_number',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|string|unique:users,phone',
-            'role_id' => 'numeric|required',
+            'role_id' => 'string|required',
             'password' => ['required', 'confirmed', Password::min(8)->letters()->symbols()],
         ];
     }

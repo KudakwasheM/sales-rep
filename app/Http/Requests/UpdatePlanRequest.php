@@ -31,7 +31,7 @@ class UpdatePlanRequest extends FormRequest
             'paid_installments' => 'numeric',
             'deposit' => 'numeric',
             'balance' => 'numeric',
-            'client_id' => 'numeric'
+            'client_id' => 'string'
         ];
     }
 }

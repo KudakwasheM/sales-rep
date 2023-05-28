@@ -28,7 +28,7 @@ class StorePaymentRequest extends FormRequest
             'paid_amount' => 'required|numeric',
             'amount' => 'numeric',
             'reference' => 'required|string',
-            'client_id' => 'required|numeric',
+            'client_id' => 'required|string',
             'created_by' => 'string',
             'plan_id' => 'required',
         ];

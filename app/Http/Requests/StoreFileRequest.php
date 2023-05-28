@@ -26,7 +26,7 @@ class StoreFileRequest extends FormRequest
         return [
             'name' => 'string',
             'path' => 'string',
-            'client_id' => 'numeric'
+            'client_id' => 'string'
         ];
     }
 }

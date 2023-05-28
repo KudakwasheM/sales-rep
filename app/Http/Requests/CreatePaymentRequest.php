@@ -27,8 +27,8 @@ class CreatePaymentRequest extends FormRequest
             'type' => 'required',
             'amount' => 'required',
             'reference' => 'required',
-            'client_id' => 'required',
-            'plan_id' => 'required',
+            'client_id' => 'string',
+            'plan_id' => 'string',
             'created_by' => 'required'
         ];
     }

@@ -28,7 +28,7 @@ class StorePlanRequest extends FormRequest
             'battery_type' => 'required|string',
             'installments' => 'required|numeric',
             'deposit' => 'numeric',
-            'client_id' => 'numeric',
+            'client_id' => 'string',
             'created_by' => 'string',
         ];
     }
