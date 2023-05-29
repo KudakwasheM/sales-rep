@@ -93,7 +93,7 @@ class ClientController extends Controller
     {
         $clientPlan = Plan::where('client_id', $id)->get();
 
-        $planId = $clientPlan->_id;
+        $planId = $clientPlan[0]->_id;
 
         return response(compact('planId'));
     }
