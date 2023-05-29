@@ -78,6 +78,8 @@ class DatabaseSeeder extends Seeder
             'ec_number' => '5143',
             'type' => 'v_mum_usd',
             'battery_number' => '123456789',
+            'home_address' => '13 Mukombe Street, Zengeza 2',
+            'work_address' => '13 Mukombe Street, Zengeza 2',
             'created_by' => 'super',
         ]);
     }

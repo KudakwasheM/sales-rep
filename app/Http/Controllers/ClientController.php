@@ -89,14 +89,13 @@ class ClientController extends Controller
         return response(compact('client'));
     }
 
-    public function getPlanByClient(Client $client)
+    public function getPlanByClient($id)
     {
-        $clientPlan = Plan::where('client_id', $client->id)->get();
+        $clientPlan = Plan::where('client_id', $id)->get();
 
         $planId = $clientPlan->id;
-        $battery = $clientPlan->battery_type;
 
-        return response(compact('planId', 'battery'));
+        return response(compact('planId'));
     }
 
     /**

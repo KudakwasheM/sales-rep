@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/clients/user-clients', [ClientController::class, 'repClients']);
     Route::apiResource('/clients', ClientController::class);
     Route::get('/clients/{client}/plan', [ClientController::class, 'showClientPlan']);
+    Route::get('/clients/{client}/plan-id', [ClientController::class, 'getPlanByClient']);
     // Route::get('/clients/plan', [ClientController::class, 'showClientPlan']);
 
     //Paymens
