@@ -28,6 +28,8 @@ class UpdateClientRequest extends FormRequest
             'id_number' => 'string|max:15',
             'dob' => 'date',
             'ec_number' => 'string',
+            'home_address' => 'string',
+            'work_address' => 'string',
             'type' => 'string',
         ];
     }

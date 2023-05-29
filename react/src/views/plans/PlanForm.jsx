@@ -19,6 +19,7 @@ const PlanForm = () => {
         installments: null,
         paid_installments: null,
         deposit: null,
+        battery_number: "",
         balance: null,
         client_id: null,
     });
@@ -115,6 +116,18 @@ const PlanForm = () => {
                     )}
                     {!loading && (
                         <form onSubmit={onSubmit} className="flex flex-col">
+                            <label htmlFor="">Battery Number</label>
+                            <input
+                                className="py-2 px-2 mb-3 border border-gray-200"
+                                value={client.battery_number}
+                                onChange={(e) =>
+                                    setClient({
+                                        ...client,
+                                        battery_number: e.target.value,
+                                    })
+                                }
+                                placeholder="123456BN"
+                            />
                             <label htmlFor="">Amount</label>
                             <input
                                 className="py-2 px-2 mb-3 border border-gray-200"

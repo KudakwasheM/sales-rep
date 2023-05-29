@@ -17,7 +17,9 @@ class Client extends Model
         'dob',
         'ec_number',
         'type',
-        'created_by'
+        'created_by',
+        'home_address',
+        'work_address'
     ];
 
     public function files()

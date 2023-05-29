@@ -16,7 +16,6 @@ const ClientForm = () => {
         ec_number: "",
         dob: null,
         type: "",
-        battery_number: "",
         docs: "",
         created_by: "",
     });
@@ -161,18 +160,7 @@ const ClientForm = () => {
                                 <option value="ssb_usd">SSB - USD</option>
                                 <option value="ssb_rtgs">SSB - RTGS</option>
                             </select>
-                            <label htmlFor="">Battery Number</label>
-                            <input
-                                className="py-2 px-2 mb-3 border border-gray-200"
-                                value={client.battery_number}
-                                onChange={(e) =>
-                                    setClient({
-                                        ...client,
-                                        battery_number: e.target.value,
-                                    })
-                                }
-                                placeholder="123456BN"
-                            />
+
                             <label htmlFor="">Documents</label>
                             <input
                                 className="py-2 px-2 mb-3 border border-gray-200"

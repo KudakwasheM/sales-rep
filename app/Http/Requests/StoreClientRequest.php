@@ -28,6 +28,8 @@ class StoreClientRequest extends FormRequest
             'id_number' => 'required|string|max:15',
             'dob' => 'required|date',
             'ec_number' => 'string',
+            'home_address' => 'string',
+            'work_address' => 'string',
             'type' => 'required|string',
         ];
     }

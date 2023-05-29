@@ -22,6 +22,8 @@ return new class extends Migration
             $table->date('dob');
             $table->string('ec_number')->nullable();
             $table->string('type');
+            $table->text('home_address');
+            $table->text('work_address');
             $table->string('created_by');
             $table->timestamps();
         });
