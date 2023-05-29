@@ -93,9 +93,15 @@ class ClientController extends Controller
     {
         $clientPlan = Plan::where('client_id', $id)->get();
 
-        $planId = $clientPlan[0]->_id;
+        if (count($clientPlan) > 0) {
+            $planId = $clientPlan[0]->_id;
+            return response(compact('planId'));
+        }
 
-        return response(compact('planId'));
+        return response()->json([
+            'status' => 404,
+            'message' => 'Plan not found'
+        ]);
     }
 
     /**
