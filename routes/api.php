@@ -48,7 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //Plans
     Route::get('/plans/user-plans', [PlanController::class, 'repPlans']);
     Route::apiResource('/plans', PlanController::class);
-    Route::post('/plans/storing', [PlanController::class, 'storing']);
+    // Route::post('/plans/storing', [PlanController::class, 'storing']);
 
     //Tokens
     Route::get('/tokens/user-tokens', [TokenController::class, 'clientTokens']);

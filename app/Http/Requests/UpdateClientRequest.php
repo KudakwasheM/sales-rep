@@ -29,7 +29,6 @@ class UpdateClientRequest extends FormRequest
             'dob' => 'date',
             'ec_number' => 'string',
             'type' => 'string',
-            'battery_number' => 'string',
         ];
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
     {
         Schema::connection($this->connection)->create('rates', function (Blueprint $table) {
             $table->id();
-            $table->double('amount');
+            $table->float('amount');
             $table->string('updated_by');
             $table->timestamps();
         });

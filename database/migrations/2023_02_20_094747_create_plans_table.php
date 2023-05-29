@@ -17,12 +17,13 @@ return new class extends Migration
     {
         Schema::connection($this->connection)->create('plans', function (Blueprint $table) {
             $table->id();
-            $table->double('amount');
+            $table->float('amount');
             $table->string('battery_type');
             $table->integer('installments');
             $table->integer('paid_installments')->default(0);
-            $table->double('deposit')->nullable();
-            $table->double('balance');
+            $table->float('deposit')->nullable();
+            $table->float('balance');
+            $table->string('battery_number')->unique();
             $table->unsignedBigInteger('client_id');
             $table->string('created_by');
             $table->timestamps();

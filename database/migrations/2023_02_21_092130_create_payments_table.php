@@ -18,8 +18,8 @@ return new class extends Migration
         Schema::connection($this->connection)->create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('type')->nullable(false);
-            $table->double('paid_amount');
-            $table->double('amount');
+            $table->float('paid_amount');
+            $table->float('amount');
             $table->string('reference')->nullable();
             $table->unsignedBigInteger('client_id')->nullable();
             $table->unsignedBigInteger('plan_id')->nullable();

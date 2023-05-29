@@ -29,7 +29,6 @@ class StoreClientRequest extends FormRequest
             'dob' => 'required|date',
             'ec_number' => 'string',
             'type' => 'required|string',
-            'battery_number' => 'required|string',
         ];
     }
 }

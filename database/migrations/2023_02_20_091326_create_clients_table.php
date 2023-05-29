@@ -22,7 +22,6 @@ return new class extends Migration
             $table->date('dob');
             $table->string('ec_number')->nullable();
             $table->string('type');
-            $table->string('battery_number')->unique();
             $table->string('created_by');
             $table->timestamps();
         });

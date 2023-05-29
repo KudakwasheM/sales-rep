@@ -17,7 +17,6 @@ class Client extends Model
         'dob',
         'ec_number',
         'type',
-        'battery_number',
         'created_by'
     ];
 

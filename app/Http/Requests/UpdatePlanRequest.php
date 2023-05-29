@@ -30,6 +30,7 @@ class UpdatePlanRequest extends FormRequest
             'installments' => 'numeric',
             'paid_installments' => 'numeric',
             'deposit' => 'numeric',
+            'battery_number' => 'string',
             'balance' => 'numeric',
             'client_id' => 'string'
         ];

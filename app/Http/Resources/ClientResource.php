@@ -22,7 +22,6 @@ class ClientResource extends JsonResource
             'dob' => $this->dob,
             'ec_number' => $this->ec_number,
             'type' => $this->type,
-            'battery_number' => $this->battery_number,
             'created_by' => $this->created_by,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
