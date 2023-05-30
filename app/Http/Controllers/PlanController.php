@@ -41,6 +41,9 @@ class PlanController extends Controller
     {
         $data = $request->validated();
 
+        $data['amount'] = floatval($data['amount']);
+        $data['installments'] = floatval($data['installments']);
+        $data['deposit'] = floatval($data['deposit']);
         $data['paid_installments'] = 0;
         $data['created_by'] = Auth::user()->username;
 

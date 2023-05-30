@@ -46,7 +46,7 @@ class PaymentController extends Controller
     {
         $data = new Payment();
         $data->type = $request['type'];
-        $data->paid_amount = $request['paid_amount'];
+        $data->paid_amount = floatval($request['paid_amount']);
         $data->reference = $request['reference'];
         $data->client_id = $request['client_id'];
         $data->created_by = $request['created_by'];
@@ -54,10 +54,10 @@ class PaymentController extends Controller
 
         $rate = Rate::latest()->first();
 
-        if ($request['type'] == 'cash_rtgs' || $request['type'] == 'ecocash') {
-            $data->amount = $request['paid_amount'] / $rate->amount;
-        }
-        $data->amount = $request['paid_amount'];
+        // if ($request['type'] == 'cash_rtgs' || $request['type'] == 'ecocash') {
+        //     $data->amount = $request['paid_amount'] / $rate->amount;
+        // }
+        $data->amount = floatval($request['paid_amount']);
         $data->created_by = Auth::user()->username;
 
         if (isset($data->plan_id)) {
