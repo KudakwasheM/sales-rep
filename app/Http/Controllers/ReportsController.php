@@ -266,8 +266,8 @@ class ReportsController extends Controller
     {
         $username = auth()->user()->username;
 
-        $today = Payment::where('created_by', $username)->whereDate('created_at', Carbon::today())->sum('amount');
-        $todayPlan = Plan::where('created_by', $username)->whereDate('created_at', Carbon::today())->sum('deposit');
+        $today = Payment::where('created_by', $username)->whereBetween('created_at', [Carbon::today()->startOfDay(), Carbon::today()->endOfDay()])->sum('amount');
+        $todayPlan = Plan::where('created_by', $username)->whereBetween('created_at', [Carbon::today()->startOfDay(), Carbon::today()->endOfDay()])->sum('deposit');
         $totalRevenue = $today + $todayPlan;
         return response(compact('totalRevenue'));
     }
