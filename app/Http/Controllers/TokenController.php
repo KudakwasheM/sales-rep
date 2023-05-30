@@ -28,7 +28,7 @@ class TokenController extends Controller
     public function clientTokens()
     {
         $username = auth()->user()->username;
-        $clients = Client::where('created_by', $username)->pluck('id');
+        $clients = Client::where('created_by', $username)->pluck('_id');
         $data = Token::with('client')->whereIn('client_id', $clients)->whereBetween('created_at', [Carbon::today()->startOfDay(), Carbon::today()->endOfDay()])->get();
         return response(compact('data'));
         // $token = Token::whereIn
